@@ -1,28 +1,65 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <keep-alive>
+    <div id="app">
+      <TabBar v-show="$route.meta.isShowTabBar" />
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </div>
+  </keep-alive>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import TabBar from "./components/TabBar/TabBar";
+import axios from "axios";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    TabBar,
+  },
+  created() {
+    /*  axios({
+      url:'http://songidea.free.idcfengye.com/login',
+      method:'POST',
+      params:{
+        username:'aaa',
+        password:'bbb'
+      }
+    }).then(res=>{
+      console.log(res)
+    }) */
+    /* axios({
+      url:'http://songidea.free.idcfengye.com//login',
+      // url:'http://192.168.43.139:8080/emailCaptcha',
+      method:'GET',
+      params:{
+        email:'1120700013@qq.com'
+      }
+    }).then(res=>{
+      console.log(res)
+    }) */
+    /* axios({
+      // url:'http://192.168.43.139:8080/login',
+      // url:'http://192.168.43.139:8080/emailCaptcha',
+      // url:'http://192.168.43.139:8080/register',
+      url:'http://songidea.free.idcfengye.com/emailCaptcha',
+      method:'GET',
+      params:{
+        username:'aaa',
+        password:'bbb',
+        email:'1120700013@qq.com',
+        inputEmailCaptcha:906150
+      }
+    }).then(res=>{
+      console.log(res)
+    }) */
+  },
+};
 </script>
 
-<style>
+<style lang="less">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  height: 100vh;
+  z-index: 1;
 }
 </style>
