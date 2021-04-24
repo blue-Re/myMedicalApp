@@ -1,6 +1,6 @@
 <template>
-  <transition name="move">
-    <div class="manHealth">
+  <Move>
+    <div class="manHealth" slot="Move">
       <NavBar>
         <LeftBack slot="left"></LeftBack>
         <div slot="title">男性健康</div>
@@ -9,17 +9,19 @@
         <img src="../img/man.jpg" alt="" />
       </div>
     </div>
-  </transition>
+  </Move>
 </template>
 
 <script>
 import NavBar from "../../../components/NavBar/NavBar";
-import LeftBack from '../../../components/LeftBack/LeftBack'
+import LeftBack from "../../../components/LeftBack/LeftBack";
+import Move from "../../../components/Move/Move";
 import { Toast } from "vant";
 export default {
   components: {
     NavBar,
-    LeftBack
+    LeftBack,
+    Move,
   },
   methods: {
     back() {

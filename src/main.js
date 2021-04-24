@@ -4,6 +4,8 @@ import router from './router/index'
 import store from './store'
 import axios from 'axios'
 
+require ('./mockjs/mock.js')
+
 import Vant from 'vant';
 import 'vant/lib/index.css';
 

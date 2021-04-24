@@ -1,26 +1,42 @@
 <template>
-  <transition name="move">
-    <div id="volunteer">
+  <Move>
+    <div id="volunteer" slot="Move">
       <Navbar>
         <LeftBack slot="left"></LeftBack>
         <div slot="title" class="title">
           <div>志愿活动</div>
         </div>
-        <div slot="right" @click="goTopublish()">
+        <div slot="right" @click="goTo('/home/publish')">
           <div class="right">
             <i class="iconfont icon-jia2" style="font-size: 25px; display: block"></i>
           </div>
         </div>
       </Navbar>
       <van-search v-model="value" class="search" placeholder="请输入搜索关键词" />
-      <div class="activity">
-        <div class="image" @click="goToActivityDeatil('/home/activityDeatil')">
-          <img src="../img/1.jpg" alt="" />
+      <div class="activity" v-for="(activity, index) in allActivity">
+        <div class="actName" @click="goTo('/home/activityDeatil')">
+          <div class="name">
+            <div class="theme">活动主题：{{ activity.theme }}</div>
+            <!-- <div class="username">活动组织者：{{ activity.username }}</div>
+            <div class="create_time">活动开始时间：{{ activity.create_time }}</div>
+            <div class="address">活动地点：{{ activity.address }}</div>
+            <div class="peoplenum">活动人数：{{ activity.peoplenum }}</div>
+            <div class="ActivityContent">活动内容：{{ activity.content }}</div> -->
+            <div class="id">活动编号：{{ activity.id }}</div>
+          </div>
         </div>
-        <div class="actName" @click="goToActivityDeatil('/home/activityDeatil')">
-          <div class="name">面膜比较试验购</div>
+        <div class="image" @click="goTo('/home/activityDeatil')">
+          <img
+            :src="
+              activity.pic_address
+                ? activity.pic_address
+                : 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F17%2F02%2F16%2F6ee1508aca7cf35a7c69c99456f9eac8.jpg%21%2Ffwfh%2F804x401%2Fquality%2F90%2Funsharp%2Ftrue%2Fcompress%2Ftrue&refer=http%3A%2F%2Fku.90sjimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621779256&t=83f1ae413bf77e03e8c82f4e15d67464'
+            "
+            alt=""
+          />
         </div>
-        <div class="otherUseful">
+
+        <!-- <div class="otherUseful">
           <ul class="tools">
             <li class="list">
               <div class="littleFont">
@@ -38,7 +54,7 @@
               </div>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
       <transition name="bottom">
         <div class="footer" v-show="isShowBottom">
@@ -100,17 +116,18 @@
         </div>
       </transition>
     </div>
-  </transition>
+  </Move>
 </template>
 
 <script>
 import LeftBack from "../../../components/LeftBack/LeftBack";
 import Navbar from "../../../components/NavBar/NavBar";
+import Move from '../../../components/Move/Move'
 import { Toast } from "vant";
 
 import { comment } from "../../../api/home";
 
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -122,26 +139,26 @@ export default {
       showActivity: {},
       a_id: 1123123123123123,
       content: "养老",
-      commentContent:''
+      commentContent: "",
     };
   },
-  computed:{
-    ...mapState(['token'])
+  computed: {
+    ...mapState(["token", "allActivity"]),
   },
   components: {
     Navbar,
     LeftBack,
+    Move
+  },
+  created() {
+    this.$store.dispatch("getAllActivity");
   },
   methods: {
-    back() {
-      this.$router.go(-1);
-      Toast("返回成功！");
-    },
     tags() {
       this.isActive = true;
       this.count++;
       Toast(`您点赞了${this.count}次`);
-      console.log(this.token)
+      console.log(this.token);
     },
     showBottom() {
       this.isShowBottom = !this.isShowBottom;
@@ -151,19 +168,15 @@ export default {
         this.isShowBottom = false;
       }
     },
-    goTopublish() {
-      this.$router.push({
-        path: "publish",
-      });
+    goTo(path) {
+      this.$router.push(path);
     },
-    goToActivityDeatil(path) {
-      this.$router.replace(path);
-    },
+    // 调用评论方法
     _comment() {
-      comment(this.a_id,this.content,this.token).then(res=>{
-        console.log(res)
-      })
-      console.log(this.commentContent)
+      comment(this.a_id, this.content, this.token).then((res) => {
+        console.log(res);
+      });
+      console.log(this.commentContent);
     },
   },
 };
@@ -174,15 +187,16 @@ export default {
   z-index: 2;
   position: relative;
   height: 100%;
-  overflow: hidden;
+  overflow: scroll;
   .search {
     margin-top: 46px;
   }
   .activity {
-    // height: 100%;
+    height: 90%;
     width: 98%;
-    // background-color: orange;
+    background-color: orange;
     margin: auto;
+    border: 1px solid deeppink;
     .image {
       height: 210px;
       width: 100%;
@@ -193,11 +207,11 @@ export default {
       }
     }
     .actName {
-      height: 50px;
+      // height: 50px;
       // background-color: pink;
       .name {
         padding-top: 10px;
-        text-align: center;
+        text-align: left;
         font-size: 20px;
       }
     }
@@ -232,7 +246,6 @@ export default {
             height: 100%;
             width: 80%;
             position: relative;
-
             .input {
               width: 100%;
               height: 30px;
@@ -300,21 +313,5 @@ export default {
     }
   }
 }
-.move-enter-active,
-.move-leave-active {
-  transition: all 0.3s;
-}
-.move-enter,
-.move-leave-to {
-  transform: translate3d(100%, 0, 0);
-}
 
-.bottom-enter-active,
-.bottom-leave-active {
-  transition: all 0.3s;
-}
-.bottom-enter,
-.bottom-leave-to {
-  transform: translateY(100%);
-}
 </style>

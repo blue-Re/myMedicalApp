@@ -11,20 +11,20 @@
         <div slot="title" class="title">
           <van-search class="search" shape="round" placeholder="请输入搜索内容" />
         </div>
-        <span slot="right" @click="onClickRight('/login')">
+        <span slot="right" @click="goTo('/login')">
           <van-icon name="user-o" size="20" />
         </span>
       </NavBar>
       <Swiper></Swiper>
       <div class="banner">
         <div class="fourItemWrapper">
-          <div class="fourItem" @click="goToVaccine()">
+          <div class="fourItem" @click="goTo('/home/vaccine')">
             <i class="iconfont icon-yimiao"></i>
             <div class="words">疫苗助手</div>
           </div>
         </div>
         <div class="fourItemWrapper">
-          <div class="fourItem" @click="goToVolunteer()">
+          <div class="fourItem" @click="goTo('/home/volunteer')">
             <i class="iconfont icon-zhiyuanfuwu-01"></i>
             <div class="words">志愿活动</div>
           </div>
@@ -36,8 +36,8 @@
           </div>
         </div>
         <div class="fourItemWrapper">
-          <div class="fourItem" @click="goToIdentify()">
-            <i class="iconfont icon-gongshi"></i>
+          <div class="fourItem" @click="goTo('/home/identify')">
+            <i class="iconfont icon-iconset0255"></i>
             <div class="words">药品识别</div>
           </div>
         </div>
@@ -153,51 +153,31 @@
 </template>
 
 <script>
-
 import NavBar from "../../components/NavBar/NavBar";
 import Swiper from "./childComponents/Swiper";
 import { Toast } from "vant";
-
 
 export default {
   components: {
     NavBar,
     Swiper,
   },
+  mounted() {
+    this.$store.dispatch("getSwiper");
+  },
   methods: {
-    
-    onClickRight(path) {
-      Toast("请先登录");
-      this.$router.replace(path);
+    goTo(gotoPath) {
+      this.$router.push({ path: gotoPath });
     },
-    goToIdentify() {
-      this.$router.push({
-        path: "/home/identify",
-      });
-    },
-    goToVolunteer() {
-      this.$router.push({
-        path: "/home/volunteer",
-      });
-    },
-    goToVaccine(){
-      this.$router.push({
-        path:'/home/vaccine'
-      })
-    },
-    goTo(gotoPath){
-      this.$router.push({path:gotoPath})
-    }
   },
 };
 </script>
 
 <style lang="less">
 #Home {
-  // overflow: hidden;
+  overflow: scroll;
   // background-color: grey;
-  height: 100vh;
-
+  height: calc(100vh + 50px);
   .location {
     color: green;
   }
@@ -332,7 +312,7 @@ export default {
       height: 30px;
       border-radius: 5%;
       // padding-top: 2px;
-      background-color: rgb(142, 189, 161);
+      background-color: rgb(3, 190, 141);
       // text-align: center;
       display: flex;
       justify-content: space-between;

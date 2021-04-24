@@ -1,7 +1,6 @@
 <template>
   <keep-alive>
     <div id="Mine">
-      
       <div class="navbar">
         <NavBar>
           <div slot="title">我的</div>
@@ -12,7 +11,7 @@
                 size="22"
                 color="rgb(153,153,153)"
                 class="ico"
-                @click="mySetting"
+                @click="goTo('/mine/mysetting')"
               />
               <i class="iconfont icon-tixing1"></i>
             </div>
@@ -22,9 +21,10 @@
       <div class="info">
         <div class="info-item">
           <div class="avator">
-            <img src="./img/1.jpg" alt="" />
+            <img src="https://songidea.oss-cn-beijing.aliyuncs.com/medical/head_sculpture_default.png" alt="" />
             <div class="rightEle">
-              <span class="name">{{userInfo}}</span>
+              <span class="name">{{ userInfo }}</span>
+              
               <div class="bottomContent">
                 <i class="iconfont icon-pencil"></i>
                 <span>个性签名：我是真的帅！</span>
@@ -36,7 +36,7 @@
 
       <div class="threeSelect">
         <div class="threeItem">
-          <div @click="goToMan()">
+          <div @click="goTo('/mine/manhealth')">
             <span class="content">
               <i class="iconfont icon-nanxing"></i>
               <span>男性健康</span>
@@ -44,7 +44,7 @@
           </div>
         </div>
         <div class="threeItem">
-          <div @click="goToWomen()">
+          <div @click="goTo('/mine/womenhealth')">
             <span class="content">
               <i class="iconfont icon-nvxing"></i>
               <span>关爱女性</span>
@@ -84,7 +84,7 @@
               <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
             </div>
           </li>
-          <li class="lists" @click="goToHealthAlert">
+          <li class="lists" @click="goTo('/mine/healthAlert')">
             <div>
               <span class="leftIcon"><i class="iconfont left-icon icon-tixing"></i></span>
               <span class="words">健康提醒</span>
@@ -109,7 +109,7 @@
                 <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
               </div>
             </li>
-            <li class="lists" @click="goToChild()">
+            <li class="lists" @click="goTo('/mine/feedback')">
               <div class="content">
                 <span class="leftIcon"
                   ><i class="iconfont left-icon icon-fankui"></i
@@ -129,7 +129,9 @@
             </li>
           </div>
         </ul>
-        <van-button type="danger" round size="large" class="logout" v-show="userInfo" @click="">退出登录</van-button>
+        <van-button type="danger" round size="large" class="logout" v-show="userInfo"
+          >退出登录</van-button
+        >
       </div>
     </div>
     <router-view></router-view>
@@ -140,7 +142,7 @@
 import NavBar from "../../components/NavBar/NavBar";
 import { Toast } from "vant";
 
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -148,48 +150,32 @@ export default {
       scroll: null,
     };
   },
-  computed:{
-    ...mapState(['userInfo'])
+  computed: {
+    ...mapState(["userInfo"]),
+
+    getToken() {
+      return this.$store.state.token;
+    },
   },
   components: {
     NavBar,
   },
   methods: {
-    goToChild() {
-      console.log("111");
+    // 退出登录
+    signOut() {
+      // 清除token
+      this.$store.dispatch("clearToken");
+      localStorage.removeItem("token");
+
+      // 刷新页面
+      location.reload();
+    },
+
+    goTo(gotoPath) {
       this.$router.push({
-        path: "/mine/feedback",
+        path: gotoPath,
       });
     },
-    the() {
-      console.log("111");
-    },
-    goToMan() {
-      this.$router.push({
-        path: "/mine/manhealth",
-      });
-    },
-    goToWomen() {
-      this.$router.push({
-        path: "/mine/womenhealth",
-      });
-    },
-    mySetting() {
-      this.$router.push({
-        path: "/mine/mysetting",
-      });
-      Toast("我点击了右侧设置页面");
-    },
-    goToHealthAlert(){
-      this.$router.push({
-        path:'/mine/healthAlert'
-      })
-    },
-    goTo(gotoPath){
-      this.$router.push({
-        path:gotoPath
-      })
-    }
   },
 };
 </script>
@@ -224,7 +210,8 @@ export default {
     height: 133px;
     width: 100%;
     padding-top: 46px;
-    background-color: rgb(118, 185, 173);
+    // background-color: rgb(118, 185, 173);
+    background-color: white;
     .info-item {
       // height: 90px;
       height: 100%;
@@ -234,18 +221,19 @@ export default {
         display: flex;
         align-items: center;
         height: 100%;
+        background-color: rgb(118, 185, 173);
         .rightEle {
           width: 100%;
           text-align: center;
           // height: 100%;
-          // background-color: aqua;
+
           display: inline-block;
           // margin-left: 30%;
           // position: relative;
           margin: auto;
           // top: -20%;
           .name {
-            color: white;
+            color: black;
           }
           .bottomContent {
             // margin-top: 4px;
@@ -450,9 +438,8 @@ export default {
           }
         }
       }
-
     }
-    .logout{
+    .logout {
       margin-top: 4%;
     }
   }

@@ -1,86 +1,84 @@
 <template>
-  <transition name="move">
-      <div class="mysetting">
-        <NavBar>
-          <LeftBack slot="left"></LeftBack>
-          <div slot="title">编辑资料</div>
-        </NavBar>
-        <ul class="infoWrapper">
-          <li class="list">
-            <span class="item">头像</span>
-            <span class="item"
-              ><img src="../img/1.jpg" alt="" style="width: 50px"
-            /></span>
-          </li>
-          <van-cell-group>
-            <van-field
-              label="昵称"
-              ref="name"
-              v-model="name"
-              disabled
-              input-align="right"
-              @blur.prevent="confirm()"
-            />
-            <van-field
-              label="电话"
-              ref="phone"
-              v-model="phone"
-              disabled
-              input-align="right"
-              @blur.prevent="confirm()"
-            />
-            <van-field
-              label="性别"
-              ref="sex"
-              v-model="sex"
-              disabled
-              input-align="right"
-              @blur.prevent="confirm()"
-            />
-            <van-field
-              label="常住地"
-              ref="address"
-              v-model="address"
-              disabled
-              input-align="right"
-              @blur.prevent="confirm()"
-            />
-            <van-field
-              label="学校"
-              ref="school"
-              v-model="school"
-              disabled
-              input-align="right"
-              @blur.prevent="confirm()"
-            />
-          </van-cell-group>
-        </ul>
-        <div class="commit">
-          <div class="buttons">
-            <van-button round type="info" class="button" @click.prevent="confirm()"
-              >编辑资料</van-button
-            >
-            <van-button
-              
-              round
-              type="info"
-              class="button"
-              color="red"
-              ref="defiChange"
-              @click="confireChange"
-              >确定修改</van-button
-            >
-          </div>
+  <Move>
+    <div class="mysetting" slot="Move">
+      <NavBar>
+        <LeftBack slot="left"></LeftBack>
+        <div slot="title">编辑资料</div>
+      </NavBar>
+      <ul class="infoWrapper">
+        <li class="list">
+          <span class="item">头像</span>
+          <span class="item"><img src="../img/1.jpg" alt="" style="width: 50px" /></span>
+        </li>
+        <van-cell-group>
+          <van-field
+            label="昵称"
+            ref="name"
+            v-model="name"
+            disabled
+            input-align="right"
+            @blur.prevent="confirm()"
+          />
+          <van-field
+            label="电话"
+            ref="phone"
+            v-model="phone"
+            disabled
+            input-align="right"
+            @blur.prevent="confirm()"
+          />
+          <van-field
+            label="性别"
+            ref="sex"
+            v-model="sex"
+            disabled
+            input-align="right"
+            @blur.prevent="confirm()"
+          />
+          <van-field
+            label="常住地"
+            ref="address"
+            v-model="address"
+            disabled
+            input-align="right"
+            @blur.prevent="confirm()"
+          />
+          <van-field
+            label="学校"
+            ref="school"
+            v-model="school"
+            disabled
+            input-align="right"
+            @blur.prevent="confirm()"
+          />
+        </van-cell-group>
+      </ul>
+      <div class="commit">
+        <div class="buttons">
+          <van-button round type="info" class="button" @click.prevent="confirm()"
+            >编辑资料</van-button
+          >
+          <van-button
+            round
+            type="info"
+            class="button"
+            color="red"
+            ref="defiChange"
+            @click="confireChange"
+            >确定修改</van-button
+          >
         </div>
       </div>
-  </transition>
+    </div>
+  </Move>
 </template>
 
 <script>
 import NavBar from "../../../components/NavBar/NavBar";
 import LeftBack from "../../../components/LeftBack/LeftBack";
+import Move from "../../../components/Move/Move";
 
-import {Toast} from 'vant'
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -94,6 +92,7 @@ export default {
   components: {
     NavBar,
     LeftBack,
+    Move,
   },
   methods: {
     confirm() {
@@ -103,11 +102,10 @@ export default {
       this.$refs.sex.disabled = false;
       this.$refs.address.disabled = false;
       this.$refs.school.disabled = false;
-      
     },
     confireChange() {
       // console.log("111");
-      Toast('修改成功')
+      Toast("修改成功");
       // this.$refs.name.value = this.name;
       // this.$refs.phone.value = this.phone;
       // this.$refs.sex.value = this.sex;

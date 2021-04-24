@@ -6,7 +6,7 @@
         <div slot="title">疫苗助手</div>
       </NavBar>
       <nav class="nav">
-        <van-tabs v-model="active" type="card" color="green" animated swipeable>
+        <van-tabs v-model="active" type="card" color="green" animated swipeable >
           <van-tab title="儿童疫苗">
             <div class="content">
               <img src="../img/childVaccine.png" alt="" style="width: 100%" />
@@ -27,11 +27,11 @@
                 ref="calendar"
               />
 
-              <div class="information">智能儿童疫苗接种时间</div>
 
-              <div class="vaccineInfo" v-if="vaccine">
+              <div class="information">智能儿童疫苗接种时间</div>
+              <div class="vaccineInfo" v-if="vaccine.length !== 0">
                 <ul class="typeOfVaccine" v-show="isShow">
-                  <li class="vaccineLists">
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[0].卡介苗">
                     <div class="vaccineName">
                       <span>卡介苗</span>
                       <div>
@@ -43,64 +43,64 @@
                     </div>
                     <div class="attention">
                       <div class="Key">
-                        <span>是否收费：{{ this.vaccine[0].卡介苗[0].是否收费 }}</span>
+                        <span>是否收费：{{ item.是否收费 }}</span>
                       </div>
                       <div class="Key">
-                        注射开始周数：{{ this.vaccine[0].卡介苗[0].注射开始周数 }}
+                        注射开始周数：{{ item.注射开始周数 }}
                       </div>
                       <div class="Key">
-                        注射开始时间：{{ this.vaccine[0].卡介苗[0].注射开始时间 }}
+                        注射开始时间：{{ item.注射开始时间 }}
                       </div>
                       <div class="Key">
                         <span
                           >注射开始月数：{{
-                            this.vaccine[0].卡介苗[0].注射开始月数
+                            item.注射开始月数
                           }}</span
                         >
                       </div>
                       <div class="Key">
-                        注射次数：{{ this.vaccine[0].卡介苗[0].注射次数 }}
+                        注射次数：{{ item.注射次数 }}
                       </div>
                       <div class="Key">
-                        注射结束周数：{{ this.vaccine[0].卡介苗[0].注射结束周数 }}
+                        注射结束周数：{{ item.注射结束周数 }}
                       </div>
                       <div class="Key">
-                        注射结束时间：{{ this.vaccine[0].卡介苗[0].注射结束时间 }}
+                        注射结束时间：{{ item.注射结束时间 }}
                       </div>
                       <div class="Key">
-                        注射结束月数：{{ this.vaccine[0].卡介苗[0].注射结束月数 }}
+                        注射结束月数：{{ item.注射结束月数 }}
                       </div>
                     </div>
                   </li>
-                  <li class="vaccineLists">
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[1].乙肝疫苗">
                     <div class="attention2">
                       <div class="Key2">
-                        <span>是否收费：{{ this.vaccine[1].乙肝疫苗[0].是否收费 }}</span>
+                        <span>是否收费：{{ item.是否收费 }}</span>
                       </div>
                       <div class="Key2">
-                        注射开始周数：{{ this.vaccine[1].乙肝疫苗[0].注射开始周数 }}
+                        注射开始周数：{{ item.注射开始周数 }}
                       </div>
                       <div class="Key2">
-                        注射开始时间：{{ this.vaccine[1].乙肝疫苗[0].注射开始时间 }}
+                        注射开始时间：{{ item.注射开始时间 }}
                       </div>
                       <div class="Key2">
                         <span
                           >注射开始月数：{{
-                            this.vaccine[1].乙肝疫苗[0].注射开始月数
+                            item.注射开始月数
                           }}</span
                         >
                       </div>
                       <div class="Key2">
-                        注射次数：{{ this.vaccine[1].乙肝疫苗[0].注射次数 }}
+                        注射次数：{{ item.注射次数 }}
                       </div>
                       <div class="Key2">
-                        注射结束周数：{{ this.vaccine[1].乙肝疫苗[0].注射结束周数 }}
+                        注射结束周数：{{ item.注射结束周数 }}
                       </div>
                       <div class="Key2">
-                        注射结束时间：{{ this.vaccine[1].乙肝疫苗[0].注射结束时间 }}
+                        注射结束时间：{{ item.注射结束时间 }}
                       </div>
                       <div class="Key2">
-                        注射结束月数：{{ this.vaccine[1].乙肝疫苗[0].注射结束月数 }}
+                        注射结束月数：{{ item.注射结束月数 }}
                       </div>
                     </div>
                     <div class="vaccineName2">
@@ -113,7 +113,7 @@
                       </div>
                     </div>
                   </li>
-                  <li class="vaccineLists">
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[2].脊灰疫苗">
                     <div class="vaccineName">
                       <span>脊灰疫苗</span>
                       <div>
@@ -125,66 +125,66 @@
                     </div>
                     <div class="attention">
                       <div class="Key">
-                        <span>是否收费：{{ this.vaccine[2].脊灰疫苗[0].是否收费 }}</span>
+                        <span>是否收费：{{ item.是否收费 }}</span>
                       </div>
                       <div class="Key">
-                        注射开始周数：{{ this.vaccine[2].脊灰疫苗[0].注射开始周数 }}
+                        注射开始周数：{{ item.注射开始周数 }}
                       </div>
                       <div class="Key">
-                        注射开始时间：{{ this.vaccine[2].脊灰疫苗[0].注射开始时间 }}
+                        注射开始时间：{{ item.注射开始时间 }}
                       </div>
                       <div class="Key">
                         <span
                           >注射开始月数：{{
-                            this.vaccine[2].脊灰疫苗[0].注射开始月数
+                            item.注射开始月数
                           }}</span
                         >
                       </div>
                       <div class="Key">
-                        注射次数：{{ this.vaccine[0].卡介苗[0].注射次数 }}
+                        注射次数：{{ item.注射次数 }}
                       </div>
                       <div class="Key">
-                        注射结束周数：{{ this.vaccine[0].卡介苗[0].注射结束周数 }}
+                        注射结束周数：{{ item.注射结束周数 }}
                       </div>
                       <div class="Key">
-                        注射结束时间：{{ this.vaccine[0].卡介苗[0].注射结束时间 }}
+                        注射结束时间：{{ item.注射结束时间 }}
                       </div>
                       <div class="Key">
-                        注射结束月数：{{ this.vaccine[0].卡介苗[0].注射结束月数 }}
+                        注射结束月数：{{ item.注射结束月数 }}
                       </div>
                     </div>
                   </li>
-                  <li class="vaccineLists">
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[3].百白破疫苗">
                     <div class="attention2">
                       <div class="Key2">
                         <span
-                          >是否收费：{{ this.vaccine[3].百白破疫苗[0].是否收费 }}</span
+                          >是否收费：{{ item.是否收费 }}</span
                         >
                       </div>
                       <div class="Key2">
-                        注射开始周数：{{ this.vaccine[3].百白破疫苗[0].注射开始周数 }}
+                        注射开始周数：{{ item.注射开始周数 }}
                       </div>
                       <div class="Key2">
-                        注射开始时间：{{ this.vaccine[3].百白破疫苗[0].注射开始时间 }}
+                        注射开始时间：{{ item.注射开始时间 }}
                       </div>
                       <div class="Key2">
                         <span
                           >注射开始月数：{{
-                            this.vaccine[3].百白破疫苗[0].注射开始月数
+                            item.注射开始月数
                           }}</span
                         >
                       </div>
                       <div class="Key2">
-                        注射次数：{{ this.vaccine[3].百白破疫苗[0].注射次数 }}
+                        注射次数：{{ item.注射次数 }}
                       </div>
                       <div class="Key2">
-                        注射结束周数：{{ this.vaccine[3].百白破疫苗[0].注射结束周数 }}
+                        注射结束周数：{{ item.注射结束周数 }}
                       </div>
                       <div class="Key2">
-                        注射结束时间：{{ this.vaccine[3].百白破疫苗[0].注射结束时间 }}
+                        注射结束时间：{{ item.注射结束时间 }}
                       </div>
                       <div class="Key2">
-                        注射结束月数：{{ this.vaccine[3].百白破疫苗[0].注射结束月数 }}
+                        注射结束月数：{{ item.注射结束月数 }}
                       </div>
                     </div>
                     <div class="vaccineName2">
@@ -197,7 +197,7 @@
                       </div>
                     </div>
                   </li>
-                  <li class="vaccineLists">
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[4].麻风疫苗">
                     <div class="vaccineName">
                       <span>麻风疫苗</span>
                       <div>
@@ -209,66 +209,66 @@
                     </div>
                     <div class="attention">
                       <div class="Key">
-                        <span>是否收费：{{ this.vaccine[4].麻风疫苗[0].是否收费 }}</span>
+                        <span>是否收费：{{ item.是否收费 }}</span>
                       </div>
                       <div class="Key">
-                        注射开始周数：{{ this.vaccine[4].麻风疫苗[0].注射开始周数 }}
+                        注射开始周数：{{ item.注射开始周数 }}
                       </div>
                       <div class="Key">
-                        注射开始时间：{{ this.vaccine[4].麻风疫苗[0].注射开始时间 }}
+                        注射开始时间：{{ item.注射开始时间 }}
                       </div>
                       <div class="Key">
                         <span
                           >注射开始月数：{{
-                            this.vaccine[4].麻风疫苗[0].注射开始月数
+                            item.注射开始月数
                           }}</span
                         >
                       </div>
                       <div class="Key">
-                        注射次数：{{ this.vaccine[4].麻风疫苗[0].注射次数 }}
+                        注射次数：{{ item.注射次数 }}
                       </div>
                       <div class="Key">
-                        注射结束周数：{{ this.vaccine[4].麻风疫苗[0].注射结束周数 }}
+                        注射结束周数：{{ item.注射结束周数 }}
                       </div>
                       <div class="Key">
-                        注射结束时间：{{ this.vaccine[4].麻风疫苗[0].注射结束时间 }}
+                        注射结束时间：{{ item.注射结束时间 }}
                       </div>
                       <div class="Key">
-                        注射结束月数：{{ this.vaccine[4].麻风疫苗[0].注射结束月数 }}
+                        注射结束月数：{{ item.注射结束月数 }}
                       </div>
                     </div>
                   </li>
-                  <li class="vaccineLists">
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[5].麻腮风疫苗">
                     <div class="attention2">
                       <div class="Key2">
                         <span
-                          >是否收费：{{ this.vaccine[5].麻腮风疫苗[0].是否收费 }}</span
+                          >是否收费：{{ item.是否收费 }}</span
                         >
                       </div>
                       <div class="Key2">
-                        注射开始周数：{{ this.vaccine[5].麻腮风疫苗[0].注射开始周数 }}
+                        注射开始周数：{{ item.注射开始周数 }}
                       </div>
                       <div class="Key2">
-                        注射开始时间：{{ this.vaccine[5].麻腮风疫苗[0].注射开始时间 }}
+                        注射开始时间：{{ item.注射开始时间 }}
                       </div>
                       <div class="Key2">
                         <span
                           >注射开始月数：{{
-                            this.vaccine[5].麻腮风疫苗[0].注射开始月数
+                            item.注射开始月数
                           }}</span
                         >
                       </div>
                       <div class="Key2">
-                        注射次数：{{ this.vaccine[5].麻腮风疫苗[0].注射次数 }}
+                        注射次数：{{ item.注射次数 }}
                       </div>
                       <div class="Key2">
-                        注射结束周数：{{ this.vaccine[5].麻腮风疫苗[0].注射结束周数 }}
+                        注射结束周数：{{ item.注射结束周数 }}
                       </div>
                       <div class="Key2">
-                        注射结束时间：{{ this.vaccine[5].麻腮风疫苗[0].注射结束时间 }}
+                        注射结束时间：{{ item.注射结束时间 }}
                       </div>
                       <div class="Key2">
-                        注射结束月数：{{ this.vaccine[5].麻腮风疫苗[0].注射结束月数 }}
+                        注射结束月数：{{ item.注射结束月数 }}
                       </div>
                     </div>
                     <div class="vaccineName2">
@@ -281,7 +281,7 @@
                       </div>
                     </div>
                   </li>
-                  <li class="vaccineLists">
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[6].乙脑减毒活疫苗">
                     <div class="vaccineName">
                       <span>乙脑减毒活疫苗</span>
                       <div>
@@ -295,70 +295,70 @@
                       <div class="Key">
                         <span
                           >是否收费：{{
-                            this.vaccine[6].乙脑减毒活疫苗[0].是否收费
+                            item.是否收费
                           }}</span
                         >
                       </div>
                       <div class="Key">
-                        注射开始周数：{{ this.vaccine[6].乙脑减毒活疫苗[0].注射开始周数 }}
+                        注射开始周数：{{ item.注射开始周数 }}
                       </div>
                       <div class="Key">
-                        注射开始时间：{{ this.vaccine[6].乙脑减毒活疫苗[0].注射开始时间 }}
+                        注射开始时间：{{ item.注射开始时间 }}
                       </div>
                       <div class="Key">
                         <span
                           >注射开始月数：{{
-                            this.vaccine[6].乙脑减毒活疫苗[0].注射开始月数
+                            item.注射开始月数
                           }}</span
                         >
                       </div>
                       <div class="Key">
-                        注射次数：{{ this.vaccine[6].乙脑减毒活疫苗[0].注射次数 }}
+                        注射次数：{{ item.注射次数 }}
                       </div>
                       <div class="Key">
-                        注射结束周数：{{ this.vaccine[6].乙脑减毒活疫苗[0].注射结束周数 }}
+                        注射结束周数：{{ item.注射结束周数 }}
                       </div>
                       <div class="Key">
-                        注射结束时间：{{ this.vaccine[6].乙脑减毒活疫苗[0].注射结束时间 }}
+                        注射结束时间：{{ item.注射结束时间 }}
                       </div>
                       <div class="Key">
-                        注射结束月数：{{ this.vaccine[6].乙脑减毒活疫苗[0].注射结束月数 }}
+                        注射结束月数：{{ item.注射结束月数 }}
                       </div>
                     </div>
                   </li>
-                  <li class="vaccineLists">
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[7].甲肝减毒活疫苗">
                     <div class="attention2">
                       <div class="Key2">
                         <span
                           >是否收费：{{
-                            this.vaccine[7].甲肝减毒活疫苗[0].是否收费
+                            item.是否收费
                           }}</span
                         >
                       </div>
                       <div class="Key2">
-                        注射开始周数：{{ this.vaccine[7].甲肝减毒活疫苗[0].注射开始周数 }}
+                        注射开始周数：{{ item.注射开始周数 }}
                       </div>
                       <div class="Key2">
-                        注射开始时间：{{ this.vaccine[7].甲肝减毒活疫苗[0].注射开始时间 }}
+                        注射开始时间：{{ item.注射开始时间 }}
                       </div>
                       <div class="Key2">
                         <span
                           >注射开始月数：{{
-                            this.vaccine[7].甲肝减毒活疫苗[0].注射开始月数
+                            item.注射开始月数
                           }}</span
                         >
                       </div>
                       <div class="Key2">
-                        注射次数：{{ this.vaccine[7].甲肝减毒活疫苗[0].注射次数 }}
+                        注射次数：{{ item.注射次数 }}
                       </div>
                       <div class="Key2">
-                        注射结束周数：{{ this.vaccine[7].甲肝减毒活疫苗[0].注射结束周数 }}
+                        注射结束周数：{{ item.注射结束周数 }}
                       </div>
                       <div class="Key2">
-                        注射结束时间：{{ this.vaccine[7].甲肝减毒活疫苗[0].注射结束时间 }}
+                        注射结束时间：{{ item.注射结束时间 }}
                       </div>
                       <div class="Key2">
-                        注射结束月数：{{ this.vaccine[7].甲肝减毒活疫苗[0].注射结束月数 }}
+                        注射结束月数：{{ item.注射结束月数 }}
                       </div>
                     </div>
                     <div class="vaccineName2">
@@ -370,7 +370,306 @@
                         ></i>
                       </div>
                     </div>
+                  </li> 
+
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[8].白破疫苗">
+                    <div class="vaccineName">
+                      <span>白破疫苗</span>
+                      <div>
+                        <i
+                          class="iconfont icon-weishengwu"
+                          style="font-size: xxx-large;"
+                        ></i>
+                      </div>
+                    </div>
+                    <div class="attention">
+                      <div class="Key">
+                        <span>是否收费：{{ item.是否收费 }}</span>
+                      </div>
+                      <div class="Key">
+                        注射开始周数：{{ item.注射开始周数 }}
+                      </div>
+                      <div class="Key">
+                        注射开始时间：{{ item.注射开始时间 }}
+                      </div>
+                      <div class="Key">
+                        <span
+                          >注射开始月数：{{
+                            item.注射开始月数
+                          }}</span
+                        >
+                      </div>
+                      <div class="Key">
+                        注射次数：{{ item.注射次数 }}
+                      </div>
+                      <div class="Key">
+                        注射结束周数：{{ item.注射结束周数 }}
+                      </div>
+                      <div class="Key">
+                        注射结束时间：{{ item.注射结束时间 }}
+                      </div>
+                      <div class="Key">
+                        注射结束月数：{{ item.注射结束月数 }}
+                      </div>
+                    </div>
                   </li>
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[10].HIB疫苗">
+                    <div class="attention2">
+                      <div class="Key2">
+                        <span>是否收费：{{ item.是否收费 }}</span>
+                      </div>
+                      <div class="Key2">
+                        注射开始周数：{{ item.注射开始周数 }}
+                      </div>
+                      <div class="Key2">
+                        注射开始时间：{{ item.注射开始时间 }}
+                      </div>
+                      <div class="Key2">
+                        <span
+                          >注射开始月数：{{
+                            item.注射开始月数
+                          }}</span
+                        >
+                      </div>
+                      <div class="Key2">
+                        注射次数：{{ item.注射次数 }}
+                      </div>
+                      <div class="Key2">
+                        注射结束周数：{{ item.注射结束周数 }}
+                      </div>
+                      <div class="Key2">
+                        注射结束时间：{{ item.注射结束时间 }}
+                      </div>
+                      <div class="Key2">
+                        注射结束月数：{{ item.注射结束月数 }}
+                      </div>
+                    </div>
+                    <div class="vaccineName2">
+                      <span>HIB疫苗</span>
+                      <div>
+                        <i
+                          class="iconfont icon-weishengwu1"
+                          style="font-size: xxx-large; color: brown"
+                        ></i>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- <li class="vaccineLists" v-for="(item,index) in vaccine[10].HIB疫苗">
+                    <div class="vaccineName">
+                      <span>HIB疫苗</span>
+                      <div>
+                        <i
+                          class="iconfont icon-weishengwu1"
+                          style="font-size: xxx-large; color: skyblue"
+                        ></i>
+                      </div>
+                    </div>
+                    <div class="attention">
+                      <div class="Key">
+                        <span>是否收费：{{ item.是否收费 }}</span>
+                      </div>
+                      <div class="Key">
+                        注射开始周数：{{ item.注射开始周数 }}
+                      </div>
+                      <div class="Key">
+                        注射开始时间：{{ item.注射开始时间 }}
+                      </div>
+                      <div class="Key">
+                        <span
+                          >注射开始月数：{{
+                            item.注射开始月数
+                          }}</span
+                        >
+                      </div>
+                      <div class="Key">
+                        注射次数：{{ item.注射次数 }}
+                      </div>
+                      <div class="Key">
+                        注射结束周数：{{ item.注射结束周数 }}
+                      </div>
+                      <div class="Key">
+                        注射结束时间：{{ item.注射结束时间 }}
+                      </div>
+                      <div class="Key">
+                        注射结束月数：{{ item.注射结束月数 }}
+                      </div>
+                    </div>
+                  </li> -->
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[11].五联疫苗">
+                    <div class="attention2">
+                      <div class="Key2">
+                        <span
+                          >是否收费：{{ item.是否收费 }}</span
+                        >
+                      </div>
+                      <div class="Key2">
+                        注射开始周数：{{ item.注射开始周数 }}
+                      </div>
+                      <div class="Key2">
+                        注射开始时间：{{ item.注射开始时间 }}
+                      </div>
+                      <div class="Key2">
+                        <span
+                          >注射开始月数：{{
+                            item.注射开始月数
+                          }}</span
+                        >
+                      </div>
+                      <div class="Key2">
+                        注射次数：{{ item.注射次数 }}
+                      </div>
+                      <div class="Key2">
+                        注射结束周数：{{ item.注射结束周数 }}
+                      </div>
+                      <div class="Key2">
+                        注射结束时间：{{ item.注射结束时间 }}
+                      </div>
+                      <div class="Key2">
+                        注射结束月数：{{ item.注射结束月数 }}
+                      </div>
+                    </div>
+                    <div class="vaccineName2">
+                      <span>五联疫苗</span>
+                      <div>
+                        <i
+                          class="iconfont icon-weishengwu2"
+                          style="font-size: xxx-large; color: gray"
+                        ></i>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[13].流感疫苗">
+                    <div class="vaccineName">
+                      <span>流感疫苗</span>
+                      <div>
+                        <i
+                          class="iconfont icon-weishengwujieguoshenhe_huaban1"
+                          style="font-size: xxx-large; color: pink"
+                        ></i>
+                      </div>
+                    </div>
+                    <div class="attention">
+                      <div class="Key">
+                        <span>是否收费：{{ item.是否收费 }}</span>
+                      </div>
+                      <div class="Key">
+                        注射开始周数：{{ item.注射开始周数 }}
+                      </div>
+                      <div class="Key">
+                        注射开始时间：{{ item.注射开始时间 }}
+                      </div>
+                      <div class="Key">
+                        <span
+                          >注射开始月数：{{
+                            item.注射开始月数
+                          }}</span
+                        >
+                      </div>
+                      <div class="Key">
+                        注射次数：{{ item.注射次数 }}
+                      </div>
+                      <div class="Key">
+                        注射结束周数：{{ item.注射结束周数 }}
+                      </div>
+                      <div class="Key">
+                        注射结束时间：{{ item.注射结束时间 }}
+                      </div>
+                      <div class="Key">
+                        注射结束月数：{{ item.注射结束月数 }}
+                      </div>
+                    </div>
+                  </li>
+                  
+                  <!-- <li class="vaccineLists" v-for="(item,index) in vaccine[14].水痘疫苗">
+                    <div class="vaccineName">
+                      <span>水痘疫苗</span>
+                      <div>
+                        <i
+                          class="iconfont icon-ziyuan"
+                          style="font-size: xxx-large; color: blue"
+                        ></i>
+                      </div>
+                    </div>
+                    <div class="attention">
+                      <div class="Key">
+                        <span
+                          >是否收费：{{
+                            item.是否收费
+                          }}</span
+                        >
+                      </div>
+                      <div class="Key">
+                        注射开始周数：{{ item.注射开始周数 }}
+                      </div>
+                      <div class="Key">
+                        注射开始时间：{{ item.注射开始时间 }}
+                      </div>
+                      <div class="Key">
+                        <span
+                          >注射开始月数：{{
+                            item.注射开始月数
+                          }}</span
+                        >
+                      </div>
+                      <div class="Key">
+                        注射次数：{{ item.注射次数 }}
+                      </div>
+                      <div class="Key">
+                        注射结束周数：{{ item.注射结束周数 }}
+                      </div>
+                      <div class="Key">
+                        注射结束时间：{{ item.注射结束时间 }}
+                      </div>
+                      <div class="Key">
+                        注射结束月数：{{ item.注射结束月数 }}
+                      </div>
+                    </div>
+                  </li> -->
+                  <li class="vaccineLists" v-for="(item,index) in vaccine[14].水痘疫苗">
+                    <div class="attention2">
+                      <div class="Key2">
+                        <span
+                          >是否收费：{{
+                            item.是否收费
+                          }}</span
+                        >
+                      </div>
+                      <div class="Key2">
+                        注射开始周数：{{ item.注射开始周数 }}
+                      </div>
+                      <div class="Key2">
+                        注射开始时间：{{ item.注射开始时间 }}
+                      </div>
+                      <div class="Key2">
+                        <span
+                          >注射开始月数：{{
+                            item.注射开始月数
+                          }}</span
+                        >
+                      </div>
+                      <div class="Key2">
+                        注射次数：{{ item.注射次数 }}
+                      </div>
+                      <div class="Key2">
+                        注射结束周数：{{ item.注射结束周数 }}
+                      </div>
+                      <div class="Key2">
+                        注射结束时间：{{ item.注射结束时间 }}
+                      </div>
+                      <div class="Key2">
+                        注射结束月数：{{ item.注射结束月数 }}
+                      </div>
+                    </div>
+                    <div class="vaccineName2">
+                      <span>水痘疫苗</span>
+                      <div>
+                        <i
+                          class="iconfont icon-huabanfuben"
+                          style="font-size: xxx-large; color: rgb(5, 210, 208)"
+                        ></i>
+                      </div>
+                    </div>
+                  </li>  
                 </ul>
               </div>
             </div>
@@ -444,6 +743,7 @@ export default {
         "水痘疫苗",
         "23价肺炎疫苗",
       ],
+      vaccine1:"A+C群流脑疫苗",
       isShow: false,
       minDate: new Date(2000, 0, 1),
       maxDate: new Date(2030, 10, 1),
@@ -500,6 +800,9 @@ export default {
   height: 100vh;
   overflow: scroll;
   // background-color: aqua;
+  ::v-deep.van-tabs__nav{
+    margin: 0 0;
+  }
   .nav {
     width: 98%;
     margin: 0 auto;
@@ -534,19 +837,23 @@ export default {
     font-size: 1.3rem;
     color: white;
   }
-  .vaccineInfo {
+  .typeOfVaccine {
     // height: 400px;
     // background-color: #bfa;
-    background-image: url("../img/childBg4.webp");
-    opacity: 0.8;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    // background-image: url("../img/childBg4.webp");
+    // background-color: rgb(3,190,141);
+    
+    border: 1px solid green;
     .vaccineLists {
       // height: 100px;
       // background-color: skyblue;
       border-bottom: 1px solid gray;
+      border-top: 1px solid gray;
+      width: 98%;
       display: flex;
-      margin: 2% 0;
+      border-radius: 5%;
+      margin: 2% auto;
+      // margin: 5% 0;
       .vaccineName {
         flex: 1;
         text-align: center;
@@ -559,13 +866,14 @@ export default {
         margin-right: 1%;
         .Key {
           text-align: left;
+          color: black;
           span {
             text-align: left;
           }
         }
       }
       .vaccineName2 {
-        color: white;
+        // color: white;
         flex: 1;
         margin-top: 15%;
       }
@@ -575,6 +883,8 @@ export default {
         // margin-left: 10%;
         .Key2 {
           text-align: left;
+          margin-left: 8%;
+          color: black;
           span {
             text-align: left;
           }

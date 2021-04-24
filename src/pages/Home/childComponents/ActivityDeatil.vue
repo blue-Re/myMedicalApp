@@ -1,98 +1,119 @@
 <template>
+  <Move>
+    <div id="activityDeatil" slot="Move">
+      <NavBar>
+        <Left slot="left"></Left>
+        <div slot="title">活动详情</div>
+        <div slot="right">
+          <i class="iconfont icon-fenxiang" @click="showShare = true"></i>
+          <van-share-sheet
+            v-model="showShare"
+            title="选择分享形式"
+            :options="options"
+            @select="onSelect"
+          />
+        </div>
+      </NavBar>
+      <div class="deatil" v-for="(actDeatil,index) in allActivity">
+        <div class="title">
+          <h4>活动主题：{{ actDeatil.theme }}</h4>
+          <div class="timeWrapper">
+            <i class="iconfont icon-icon-test"></i>
+            <span class="time">{{actDeatil.create_time}}</span>
+          </div>
+        </div>
+        <section class="description">
+          <span class="words">
+            活动内容：{{actDeatil.content}}
+          </span>
+          <div>活动编号：{{actDeatil.id}}</div>
+          <div>活动组织者：{{actDeatil.username}}</div>
+          <div>活动地点：{{actDeatil.address}}</div>
+          <div>活动人数：{{actDeatil.peoplenum}}</div>
+          <img src="../img/mm.png" alt="" />
+          <span class="words">
+            本次比较试验围绕消费者关注的产品安全和补水保湿功能，一是对《化妆品安全技术规范》中所列41种糖皮质激素进行了检测筛查；二是按照《化妆品安全技术规范》对防腐剂的要求，对样品的标签标示进行了核查；三是依据行业标准QB/T
+            4256-2011《化妆品保湿功效评价指南》的要求，征集200志愿者，对40款面膜商品的1小时、2小时、4小时保湿功效分别进行了测试。
+          </span>
+          <img src="../img/mm2.jpg" alt="" />
+          <span class="words">
+            经过严格考核筛选，2011年9月，20名“315志愿者”正式“上岗”。志愿者中年龄最大的65岁，年龄最小的31岁，有职业律师、村（社区）干部、农业专家、教师、个体户等，他们发挥各自优势，在不同岗位、不同领域为消费维权贡献力量。沙洋县农业局高级农艺师金以龙借下乡培训农业生产技术之际，教农民识别假冒伪劣农资；五里铺镇严店村村干部罗天金在村委会制作消费维权宣传栏，提高村民消费维权意识；毛李中学退休教师张仁坤利用擅长交流沟通的职业长处，多次促使消费者和经营者握手言和……
+          </span>
+        </section>
+        <van-button type="primary" block round class="volunteerApply"
+          >志愿者申请</van-button
+        >
+      </div>
+      <div class="tools">
+        <div class="tools-items">
+          <i
+            class="iconfont icon-dianzan"
+            @click="tags"
+            :class="{ active: isActive }"
+          ></i>
+          <span class="tagCount">{{ tagCount }}</span>
+        </div>
+        <div class="tools-items">
+          <i class="iconfont icon-tiaocha"></i>
+          <span class="commentCount">{{ commentCount }}</span>
+        </div>
+        <div class="tools-items" @click="showShare = true">
+          <i class="iconfont icon-fenxiang"></i>
+          <span class="share">分享</span>
+        </div>
+      </div>
 
-  <div id="activityDeatil">
-    <NavBar>
-      <Left slot="left"></Left>
-      <div slot="title">活动详情</div>
-      <div slot="right">
-        <i class="iconfont icon-fenxiang" @click="showShare = true"></i>
-        <van-share-sheet
-          v-model="showShare"
-          title="选择分享形式"
-          :options="options"
-          @select="onSelect"
+      <div class="inputComment">
+        <input
+          type="text"
+          placeholder="请输入对应内容"
+          class="input"
+          v-model="commentContent"
         />
+        <button class="button" @click="_comment">评论</button>
       </div>
-    </NavBar>
-    <div class="title">
-      <h4>面膜比较实验购样（澳门实体店）</h4>
-      <div class="timeWrapper">
-        <i class="iconfont icon-icon-test"></i>
-        <span class="time">2021-03-01</span>
-      </div>
-    </div>
-    <section class="description">
-      <span class="words">
-        据悉，本次比较试验通过大型商场、品牌专卖店、网络电商平台及直销零售商等渠道购买了40款面膜(其中线下实体店27款，线上电商平台13款)，涵盖了自然堂、百雀羚、一叶子等大众品牌，兰蔻、SK-II等高端品牌，以及LEADERS(丽得姿)、utena(佑天兰)、papa
-        recipe（春雨）等日韩网红品牌，面贴膜和涂抹式面膜各20款，面贴膜价格在17.7元至740元之间，涂抹式面膜价格在26.62元至1350元之间
-      </span>
-      <img src="../img/mm.png" alt="" />
-      <span class="words">
-        本次比较试验围绕消费者关注的产品安全和补水保湿功能，一是对《化妆品安全技术规范》中所列41种糖皮质激素进行了检测筛查；二是按照《化妆品安全技术规范》对防腐剂的要求，对样品的标签标示进行了核查；三是依据行业标准QB/T
-        4256-2011《化妆品保湿功效评价指南》的要求，征集200志愿者，对40款面膜商品的1小时、2小时、4小时保湿功效分别进行了测试。
-      </span>
-      <img src="../img/mm2.jpg" alt="" />
-      <span class="words">
-        经过严格考核筛选，2011年9月，20名“315志愿者”正式“上岗”。志愿者中年龄最大的65岁，年龄最小的31岁，有职业律师、村（社区）干部、农业专家、教师、个体户等，他们发挥各自优势，在不同岗位、不同领域为消费维权贡献力量。沙洋县农业局高级农艺师金以龙借下乡培训农业生产技术之际，教农民识别假冒伪劣农资；五里铺镇严店村村干部罗天金在村委会制作消费维权宣传栏，提高村民消费维权意识；毛李中学退休教师张仁坤利用擅长交流沟通的职业长处，多次促使消费者和经营者握手言和……
-      </span>
-    </section>
-    <van-button type="primary" block round class="volunteerApply">志愿者申请</van-button>
 
-    <div class="tools">
-      <div class="tools-items">
-        <i class="iconfont icon-dianzan" @click="tags" :class="{ active: isActive }"></i>
-        <span class="tagCount">{{ tagCount }}</span>
-      </div>
-      <div class="tools-items">
-        <i class="iconfont icon-tiaocha"></i>
-        <span class="commentCount">{{ commentCount }}</span>
-      </div>
-      <div class="tools-items" @click="showShare = true">
-        <i class="iconfont icon-fenxiang"></i>
-        <span class="share" >分享</span>
-      </div>
+      <section class="comment">
+        <div class="commentInfo">
+          <div class="avator">
+            <img src="../img/1.jpg" alt="" />
+          </div>
+          <div class="info">
+            <span class="name">海洋里的虾米</span>
+            <div class="time">2019-07-19 11:35:00</div>
+          </div>
+        </div>
+        <div class="commentContent">
+          <span class="words">这个面膜让我感觉神清气爽，我的肌肤感觉到非常的丝滑</span>
+        </div>
+      </section>
+      <section class="comment">
+        <div class="commentInfo">
+          <div class="avator">
+            <img src="../img/1.jpg" alt="" />
+          </div>
+          <div class="info">
+            <span class="name">海洋里的虾米</span>
+            <div class="time">2019-07-19 11:35:00</div>
+          </div>
+        </div>
+        <div class="commentContent">
+          <span class="words">这个面膜让我感觉神清气爽，我的肌肤感觉到非常的丝滑</span>
+        </div>
+      </section>
     </div>
-
-    <div class="inputComment">
-      
-    </div>
-
-    <section class="comment">
-      <div class="commentInfo">
-        <div class="avator">
-          <img src="../img/1.jpg" alt="" >
-        </div>
-        <div class="info">
-          <span class="name">海洋里的虾米</span>
-          <div class="time">2019-07-19 11:35:00</div>
-        </div>
-      </div>
-      <div class="commentContent">
-        <span class="words">这个面膜让我感觉神清气爽，我的肌肤感觉到非常的丝滑</span>
-      </div>
-    </section>
-    <section class="comment">
-      <div class="commentInfo">
-        <div class="avator">
-          <img src="../img/1.jpg" alt="" >
-        </div>
-        <div class="info">
-          <span class="name">海洋里的虾米</span>
-          <div class="time">2019-07-19 11:35:00</div>
-        </div>
-      </div>
-      <div class="commentContent">
-        <span class="words">这个面膜让我感觉神清气爽，我的肌肤感觉到非常的丝滑</span>
-      </div>
-    </section>
-  </div>
+  </Move>
 </template>
 
 <script>
 import NavBar from "../../../components/NavBar/NavBar";
 import Left from "../../../components/LeftBack/LeftBack";
+import Move from "../../../components/Move/Move";
 
 import { Toast } from "vant";
+import { mapState } from "vuex";
+
+import { comment } from "../../../api/home";
 export default {
   data() {
     return {
@@ -100,6 +121,8 @@ export default {
       tagCount: 0,
       commentCount: 0,
       isActive: false,
+      commentContent: [],
+      a_id: 111,
       options: [
         [
           { name: "微信", icon: "wechat" },
@@ -116,9 +139,16 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapState(["token", "allActivity"]),
+  },
   components: {
     NavBar,
     Left,
+    Move,
+  },
+  created() {
+    this.$store.dispatch("getAllActivity");
   },
   methods: {
     onSelect(option) {
@@ -129,6 +159,12 @@ export default {
       this.isActive = true;
       this.tagCount++;
       Toast(`您点赞了${this.tagCount}次`);
+    },
+    _comment() {
+      comment(this.a_id, this.content, this.token).then((res) => {
+        console.log(res);
+      });
+      console.log(this.commentContent);
     },
   },
 };
@@ -151,8 +187,8 @@ export default {
     }
     .timeWrapper {
       position: absolute;
-      bottom: 0;
-      right: 5%;
+      bottom: -22px;
+      right: 0%;
       .time {
         font-size: 12%;
       }
@@ -175,28 +211,28 @@ export default {
   .tools {
     display: flex;
     text-align: center;
-    border-bottom: 1px solid rgba(114, 64, 64, 0.6) ;
+    border-bottom: 1px solid rgba(114, 64, 64, 0.6);
     .tools-items {
       flex: 1;
       font-size: 1rem;
       .active {
         color: green;
       }
-      .iconfont{
+      .iconfont {
         font-size: 1.5rem;
       }
     }
   }
-  .comment{
+  .comment {
     // height: 300px;
     // background-color: yellow;
-    margin: 5% 0 ;
+    margin: 5% 0;
     position: relative;
-    .commentInfo{
+    .commentInfo {
       display: flex;
-      .avator{
+      .avator {
         margin-left: 4%;
-        img{
+        img {
           height: 50px;
           width: 50px;
           border-radius: 50%;
@@ -204,23 +240,48 @@ export default {
           top: 17%;
         }
       }
-      .info{
+      .info {
         margin-left: 4%;
         font-size: 1rem;
         margin-top: 2%;
-        .time{
+        .time {
           font-size: 1rem;
-          color: rgba(102,102,102,.5);
+          color: rgba(102, 102, 102, 0.5);
         }
       }
     }
-    .commentContent{
+    .commentContent {
       // height: 200px;
       margin-left: 21%;
       // background-color: aqua;
-      .words{
+      .words {
         font-size: 1rem;
       }
+    }
+  }
+  .inputComment {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    .input {
+      width: 80%;
+      height: 30px;
+      outline-color: orange;
+      border: 1px solid rgb(153, 153, 153);
+      border-radius: 5%;
+      margin-top: 3%;
+    }
+    .button {
+      height: 35px;
+      text-align: center;
+      width: 60px;
+      // position: relative;
+      // left: 103%;
+      // top: 18%;
+      background-color: rgb(67, 207, 124);
+      border: none;
+      color: white;
+      bottom: 5%;
     }
   }
 }

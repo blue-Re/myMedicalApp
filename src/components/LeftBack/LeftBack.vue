@@ -8,7 +8,9 @@
 export default {
   methods: {
     back() {
+      // location.reload()
       this.$router.go(-1);
+      
     },
   },
 };

@@ -1,10 +1,15 @@
 <template>
-  <transition name="move">
-    <div id="MedicineIdentify">
+  <Move>
+    <div id="MedicineIdentify" slot="Move">
       <NavBar ref="navbar">
         <LeftBack slot="left"></LeftBack>
         <div slot="title">药品检测</div>
       </NavBar>
+      <van-notice-bar
+        class="notice"
+        left-icon="volume-o"
+        text="图片效果越大越清晰更能提高物品的识别成功率哦！"
+      />
       <div class="box">
         <div class="content">
           <div class="add">
@@ -23,107 +28,107 @@
           <div class="words"><span>开始检测</span></div>
         </div>
       </div>
-      <van-loading type="spinner" color="#1989fa" class="loading" v-show="isShow"/>
+      <van-loading type="spinner" color="#1989fa" class="loading" v-show="isShow" />
       <ul class="params" v-show="showList">
         <li class="items">
           <div class="description">
-            <span class="leftWords words">GoodsName</span>
+            <span class="leftWords words">物品名称</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{this.imageData.goodsName}}</span>
-          </div>
-        </li>
-        <li class="items">
-          <div class="description">
-            <span class="leftWords words">manuAddress</span>
-          </div>
-          <div class="description">
-            <span class="rightWords words">{{this.imageData.manuAddress}}</span>
+            <span class="rightWords words">{{ this.imageData.goodsName }}</span>
           </div>
         </li>
         <li class="items">
           <div class="description">
-            <span class="leftWords words">manuName</span>
+            <span class="leftWords words">生产地址</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{this.imageData.manuName}}</span>
-          </div>
-        </li>
-        <li class="items">
-          <div class="description">
-            <span class="leftWords words">barCode</span>
-          </div>
-          <div class="description">
-            <span class="rightWords words">{{this.imageData.code}}</span>
+            <span class="rightWords words">{{ this.imageData.manuAddress }}</span>
           </div>
         </li>
         <li class="items">
           <div class="description">
-            <span class="leftWords words">trademark</span>
+            <span class="leftWords words">生产厂家</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{this.imageData.trademark}}</span>
-          </div>
-        </li>
-        <li class="items">
-          <div class="description">
-            <span class="leftWords words">goodsType</span>
-          </div>
-          <div class="description">
-            <span class="rightWords words">{{this.imageData.goodsType}}</span>
+            <span class="rightWords words">{{ this.imageData.manuName }}</span>
           </div>
         </li>
         <li class="items">
           <div class="description">
-            <span class="leftWords words">spec</span>
+            <span class="leftWords words">条形码编号</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{this.imageData.spec}}</span>
+            <span class="rightWords words">{{ this.imageData.code }}</span>
           </div>
         </li>
         <li class="items">
           <div class="description">
-            <span class="leftWords words">trademark</span>
+            <span class="leftWords words">商标</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{this.imageData.trademark}}</span>
+            <span class="rightWords words">{{ this.imageData.trademark }}</span>
+          </div>
+        </li>
+        <li class="items">
+          <div class="description">
+            <span class="leftWords words">物品分类</span>
+          </div>
+          <div class="description">
+            <span class="rightWords words">{{ this.imageData.goodsType }}</span>
+          </div>
+        </li>
+        <li class="items">
+          <div class="description">
+            <span class="leftWords words">规格</span>
+          </div>
+          <div class="description">
+            <span class="rightWords words">{{ this.imageData.spec }}</span>
+          </div>
+        </li>
+        <li class="items">
+          <div class="description">
+            <span class="leftWords words">参考价格</span>
+          </div>
+          <div class="description">
+            <span class="rightWords words">{{
+              this.imageData.price ? this.imageData.price : "暂无报价"
+            }}</span>
           </div>
         </li>
       </ul>
     </div>
-  </transition>
+  </Move>
 </template>
 
 <script>
 import NavBar from "../../../components/NavBar/NavBar";
 import LeftBack from "../../../components/LeftBack/LeftBack";
-import { Tab, Toast } from "vant";
-import axios from 'axios'
-import {mapState} from 'vuex'
+import Move from '../../../components/Move/Move'
+import { Toast } from "vant";
+import axios from "axios";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
-      fileList: [
-        
-        // Uploader 根据文件后缀来判断是否为图片文件
-        // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
-      ],
-      imageData:{},
-      isShow:false,
-      showList:false
+      fileList: [],
+      imageData: {},
+      isShow: false,
+      showList: false,
     };
   },
-  computed:{
-    ...mapState(['token'])
+  computed: {
+    ...mapState(["token"]),
   },
   components: {
     NavBar,
     LeftBack,
+    Move
   },
   methods: {
     startCheck() {
-      this.isShow = true
-      Toast("正在检测，请稍候！！！")
+      this.isShow = true;
+      Toast("正在检测，请稍候！！！");
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
@@ -131,24 +136,26 @@ export default {
       // Toast("正在检测，请稍候！！！")
       // this.isShow = true
       const forms = new FormData();
-      forms.append('file',file.file);// 获取上传图片信息
-        axios.post('http://songidea.free.idcfengye.com/scanBar',forms ,{
-          headers:{
-            'content-type':'multipart/form-data',
-            'token':this.token
-          }
-        }).then(res=>{
-          if(res.data.status===200){
-            console.log(res)
-            this.imageData = res.data.showapi_res_body
-            this.isShow = false
-            this.showList = true
-            Toast(res.data.showapi_res_body.remark)
-          }else{
-            Toast(res.data.msg)
-            this.isShow = false
-          }
+      forms.append("file", file.file); // 获取上传图片信息
+      axios
+        .post("http://songidea.cn.utools.club/scanBar", forms, {
+          headers: {
+            "content-type": "multipart/form-data",
+            token: this.token,
+          },
         })
+        .then((res) => {
+          if (res.data.status === 200) {
+            console.log(res);
+            this.imageData = res.data.showapi_res_body;
+            this.isShow = false;
+            this.showList = true;
+            Toast(res.data.showapi_res_body.remark);
+          } else {
+            Toast(res.data.msg);
+            this.isShow = false;
+          }
+        });
     },
   },
 };
@@ -164,8 +171,11 @@ export default {
   .van-nav-bar__content {
     background-color: rgb(113, 219, 192);
   }
-  .box {
+  .notice {
     padding-top: 46px;
+  }
+  .box {
+    // padding-top: 46px;
     height: 330px;
     width: 100%;
     // background-color: yellowgreen;
@@ -192,17 +202,17 @@ export default {
           // margin-left: 13%;
           // background-color: rgb(217, 217, 217);
           // ::v-deep.van-uploader__input{
-            
+
           //   background-color: #bfa;
           //   z-index: 2;
           // }
-          ::v-deep.van-uploader__upload{
+          ::v-deep.van-uploader__upload {
             margin: 0;
-            .van-icon{
+            .van-icon {
               font-size: 50px;
             }
           }
-          ::v-deep.van-uploader__preview{
+          ::v-deep.van-uploader__preview {
             margin: 0;
           }
         }
@@ -215,7 +225,7 @@ export default {
       position: relative;
       margin-top: 50px;
       border-radius: 5%;
-      background-color: rgb(113, 219, 192);
+      background-color: rgb(3, 190, 141);
       .words {
         // line-height: 20px;
         text-align: center;
@@ -228,7 +238,7 @@ export default {
       }
     }
   }
-  .loading{
+  .loading {
     position: relative;
     text-align: center;
   }
@@ -242,6 +252,7 @@ export default {
       // background-color: orange;
       flex: 1;
       border-bottom: 1px solid rgb(195, 195, 195);
+      // border-bottom: 1px solid green;
       display: flex;
       .description {
         flex: 1;
@@ -253,18 +264,15 @@ export default {
           margin: auto;
         }
         .rightWords {
-          color: rgb(166, 166, 166);
+          // color: rgb(166, 166, 166);
+          color: black;
+        }
+        .leftWords{
+          font-weight: bold;
         }
       }
     }
   }
 }
-.move-enter-active,
-.move-leave-active {
-  transition: all 0.3s;
-}
-.move-enter,
-.move-leave-to {
-  transform: translate3d(100%, 0, 0);
-}
+
 </style>

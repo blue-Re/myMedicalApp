@@ -1,52 +1,51 @@
 <template>
-  <transition name="move">
-      <div class="cherry">
-        <NavBar>
-          <LeftBack slot="left"></LeftBack>
-        </NavBar>
-        <header class="topTitle">
-          <div class="doctorPass">丁香医生审核专业委员会通过</div>
-          <div class="title">杨梅、樱桃用盐水泡除虫！怎样买到放心的呢？</div>
-          <div class="author">
-            <img src="../img/author.jpg" alt="" />
-            <div class="authorIntro">
-              兰晓芳
-              <br />
-              <span>中国农业大学 食品加共与安全硕士</span>
-            </div>
+  <Move>
+    <div class="cherry" slot="Move">
+      <NavBar>
+        <LeftBack slot="left"></LeftBack>
+      </NavBar>
+      <header class="topTitle">
+        <div class="doctorPass">丁香医生审核专业委员会通过</div>
+        <div class="title">杨梅、樱桃用盐水泡除虫！怎样买到放心的呢？</div>
+        <div class="author">
+          <img src="../img/author.jpg" alt="" />
+          <div class="authorIntro">
+            兰晓芳
+            <br />
+            <span>中国农业大学 食品加共与安全硕士</span>
           </div>
-          <div class="cherryBg">
-            <img src="../img/cherry.jpeg" alt="" />
-          </div>
-        </header>
-        <section class="description">
-          <div class="words">
-            在杨梅快要成熟的时候，果蝇会在里面产卵，这些卵孵化后就变成了我们用盐水泡出来的小白虫。
-            虽然听起来有点不舒服，但其实这并不影响杨梅的食用价值，也并不是杨梅质量不好的表现。
-            果蝇跟苍蝇不同，它们从小吃果肉长大，干净无毒、不致病，也不会寄生在人体内。进入胃里后，它们无法在胃酸中存活，最终会作为蛋白质和食物一起被消化掉。
-          </div>
-        </section>
-      </div>
-    
-  </transition>
+        </div>
+        <div class="cherryBg">
+          <img src="../img/cherry.jpeg" alt="" />
+        </div>
+      </header>
+      <section class="description">
+        <div class="words">
+          在杨梅快要成熟的时候，果蝇会在里面产卵，这些卵孵化后就变成了我们用盐水泡出来的小白虫。
+          虽然听起来有点不舒服，但其实这并不影响杨梅的食用价值，也并不是杨梅质量不好的表现。
+          果蝇跟苍蝇不同，它们从小吃果肉长大，干净无毒、不致病，也不会寄生在人体内。进入胃里后，它们无法在胃酸中存活，最终会作为蛋白质和食物一起被消化掉。
+        </div>
+      </section>
+    </div>
+  </Move>
 </template>
 
 <script>
 import LeftBack from "../../../components/LeftBack/LeftBack";
 import NavBar from "../../../components/NavBar/NavBar";
+import Move from "../../../components/Move/Move";
 export default {
   components: {
     NavBar,
     LeftBack,
+    Move,
   },
-  
 };
 </script>
 
 <style lang="less">
-
 .cherry {
-  overflow:hidden;
+  overflow: hidden;
   height: 100vh;
   // background-color: orange;
   .topTitle {
@@ -99,7 +98,7 @@ export default {
     padding-top: 10%;
     // background-color: purple;
     margin: auto;
-    .words{
+    .words {
       text-align: left;
     }
   }

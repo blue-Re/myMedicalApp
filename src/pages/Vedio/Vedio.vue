@@ -1,26 +1,34 @@
 <template>
   <keep-alive>
     <div id="everyRecommend">
-      
-      <van-tabs v-model="active" sticky background="rgb(3,190,141)" title-active-color="white" swipeable color="white">
+      <van-tabs
+        v-model="active"
+        sticky
+        background="rgb(3,190,141)"
+        animated
+        swipeable
+        title-active-color="white"
+        color="white"
+        title-inactive-color="black"
+      >
         <van-tab title="饮食健康">
           <ul class="foodHealth">
-            <li class="lists" @click="goToCherry">
+            <li class="lists" @click="goTo('/vedio/cherry')">
               <div class="leftWords">
                 <span>杨梅、樱桃用盐水泡除虫！怎样买到放心的呢？</span>
                 <div class="author"><span>作者：兰晓芳</span></div>
               </div>
               <div class="rightImg">
-                <img src="../Mine/img/1.jpg" alt="" />
+                <img src="./img/杨梅.png" alt="" />
               </div>
             </li>
-            <li class="lists" @click="goTomilk">
+            <li class="lists" @click="goTo('/vedio/milk')">
               <div class="leftWords">
                 <span>每天一杯酸奶，能预防糖尿病？还真有几分道理</span>
                 <div class="author"><span>作者：范志红</span></div>
               </div>
               <div class="rightImg">
-                <img src="../Mine/img/1.jpg" alt="" />
+                <img src="./img/酸奶预防糖尿病.png" alt="" />
               </div>
             </li>
             <li class="lists">
@@ -29,7 +37,7 @@
                 <div class="author"><span>作者：付婷</span></div>
               </div>
               <div class="rightImg">
-                <img src="../Mine/img/1.jpg" alt="" />
+                <img src="./img/味精.png" alt="" />
               </div>
             </li>
             <li class="lists">
@@ -38,7 +46,7 @@
                 <div class="author"><span>作者：马莎佰</span></div>
               </div>
               <div class="rightImg">
-                <img src="../Mine/img/1.jpg" alt="" />
+                <img src="./img/凉粉凉皮.png" alt="" />
               </div>
             </li>
           </ul>
@@ -53,7 +61,7 @@
             </div>
             <li class="list">
               <div class="leftImg">
-                <img src="../Mine/img/1.jpg" alt="" />
+                <img src="./img/老年慢性病管理.png" alt="" />
               </div>
               <div class="rightDes">
                 <div class="words">
@@ -66,7 +74,7 @@
             </li>
             <li class="list">
               <div class="leftImg">
-                <img src="../Mine/img/1.jpg" alt="" />
+                <img src="./img/银屑病治疗.png" alt="" />
               </div>
               <div class="rightDes">
                 <div class="words">
@@ -79,7 +87,7 @@
             </li>
             <li class="list">
               <div class="leftImg">
-                <img src="../Mine/img/1.jpg" alt="" />
+                <img src="./img/单侧声带麻痹治疗.png" alt="" />
               </div>
               <div class="rightDes">
                 <div class="words">
@@ -92,7 +100,7 @@
             </li>
             <li class="list">
               <div class="leftImg">
-                <img src="../Mine/img/1.jpg" alt="" />
+                <img src="./img/如何进行银屑病关节病自我筛查.png" alt="" />
               </div>
               <div class="rightDes">
                 <div class="words">
@@ -105,8 +113,60 @@
             </li>
           </ul>
         </van-tab>
-        <van-tab title="孕产育儿">内容 2</van-tab>
-        <van-tab title="常见疾病">内容 3</van-tab>
+        <van-tab title="急救指南">
+          <ul class="foodHealth">
+            <li class="lists" @click="goTo()">
+              <div class="leftWords">
+                <span>眼睛进了沙子，首先要进行大量水的冲洗</span>
+                <div class="author"><span>作者：郝芳</span></div>
+              </div>
+              <div class="rightImg">
+                <img src="./img/眼睛进沙子.png" alt="" />
+              </div>
+            </li>
+            <li class="lists" @click="goTo()">
+              <div class="leftWords">
+                <span>鱼刺卡住喉咙，该如何快速急救</span>
+                <div class="author"><span>作者：于小慧</span></div>
+              </div>
+              <div class="rightImg">
+                <img src="./img/鱼刺.png" alt="" />
+              </div>
+            </li>
+            <li class="lists">
+              <div class="leftWords">
+                <span>噎食后自救法</span>
+                <div class="author"><span>作者：戴晓婷</span></div>
+              </div>
+              <div class="rightImg">
+                <img src="./img/吃东西被噎住.png" alt="" />
+              </div>
+            </li>
+            <li class="lists">
+              <div class="leftWords">
+                <span>如果察觉飞虫入耳，千万不可以用掏耳勺去乱挖</span>
+                <div class="author"><span>作者：琪琪</span></div>
+              </div>
+              <div class="rightImg">
+                <img src="./img/虫子入耳.png" alt="" />
+              </div>
+            </li>
+          </ul>
+        </van-tab>
+        <van-tab title="常见疾病">
+          <ul class="foodHealth">
+            <li class="lists" @click="goTo()" v-for="(item,index) in mockData">
+              <div class="leftWords">
+                <span>{{item.title}}</span>
+                <div class="author"><span>作者：{{item.username}}</span></div>
+              </div>
+              <div class="rightImg">
+                <img :src="item.img" alt="" />
+              </div>
+            </li>
+            
+          </ul>
+        </van-tab>
       </van-tabs>
     </div>
     <router-view></router-view>
@@ -114,29 +174,24 @@
 </template>
 
 <script>
+import {reqMockData} from '../../mockjs/reqMock' //引入模拟数据
 export default {
+  mounted(){
+    reqMockData().then(res=>{
+      console.log(res)
+      this.mockData = res.data
+    })
+  },
   data() {
     return {
-      currentIndex: 0,
-      title: ["饮食健康", "孕产育儿", "常见疾病"],
       active: 2,
+      mockData:[]
     };
   },
   methods: {
-    isActive(item, index) {
-      console.log(item, index);
-      this.currentIndex = index;
-    },
-    goToCherry() {
-      this.$router.push({
-        path: "/vedio/cherry",
-      });
-    },
-    goTomilk() {
-      this.$router.push({
-        path: "vedio/milk",
-      });
-    },
+    goTo(path){
+      this.$router.push(path)
+    }
   },
 };
 </script>
@@ -148,7 +203,6 @@ export default {
   overflow: scroll;
   z-index: 1;
 
-  
   .foodHealth {
     .lists {
       display: flex;
@@ -169,6 +223,7 @@ export default {
         margin: 2% 4%;
         img {
           width: 75px;
+          height: 75px;
           border-radius: 10%;
         }
       }
@@ -204,6 +259,7 @@ export default {
         margin: 2% 5%;
         img {
           width: 70px;
+          height: 70px;
           border-radius: 10%;
         }
       }

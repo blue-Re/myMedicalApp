@@ -86,7 +86,7 @@
           </template>
         </van-field>
 
-        <van-field name="resolve_matter" label="Q8：您认为解决医疗问题的方法是什么">
+        <van-field name="resolve_matter" label="Q8：您认为解决医疗问题的方法是什么(多选)">
           <template #input>
             <van-checkbox-group v-model="resolve_matter" direction="column">
               <van-checkbox name="政府加大管理力度与资金投入"
@@ -106,7 +106,11 @@
           </template>
         </van-field>
 
-        <van-field name="rate" label="您对此次问卷是否满意？" style="font-size:1rem;font-weight:bold">
+        <van-field
+          name="rate"
+          label="您对此次问卷是否满意？"
+          style="font-size: 1rem; font-weight: bold"
+        >
           <template #input>
             <van-rate v-model="rate" />
           </template>
@@ -125,6 +129,10 @@ import Move from "../../../components/Move/Move";
 import LeftBack from "../../../components/LeftBack/LeftBack";
 import NavBar from "../../../components/NavBar/NavBar";
 
+import { mapState } from "vuex";
+
+import { questionsSurvey } from "../../../api/mine";
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -141,6 +149,9 @@ export default {
       rate: 0,
     };
   },
+  computed: {
+    ...mapState(["token"]),
+  },
   components: {
     Move,
     LeftBack,
@@ -148,7 +159,26 @@ export default {
   },
   methods: {
     onSubmit(values) {
-      console.log("submit", values);
+      // console.log("submit", values);
+      questionsSurvey(this.token, values).then((res) => {
+        if (res.code === 1000) {
+          Toast(res.msg);
+          (this.sex = ""),
+            (this.profession = ""),
+            (this.remark = ""),
+            (this.medical_insurance = ""),
+            (this.getIll = ""),
+            (this.go_to_doctor = ""),
+            (this.medical_matter = ""),
+            (this.resolve_matter = ""),
+            (this.checkbox = false),
+            (this.resolve_matter = []),
+            (this.rate = 0);
+          // location.reload()
+        } else {
+          Toast(res.msg);
+        }
+      });
     },
   },
 };

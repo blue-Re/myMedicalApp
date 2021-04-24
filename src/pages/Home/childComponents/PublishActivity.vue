@@ -1,6 +1,6 @@
 <template>
-  <transition name="move">
-    <div class="publishActivity">
+  <Move>
+    <div class="publishActivity" slot="Move">
       <NavBar>
         <LeftBack slot="left"></LeftBack>
         <div slot="title">发布活动</div>
@@ -22,12 +22,6 @@
           placeholder="请填写活动人数"
           :rules="[{ required: true, message: '请填写活动人数' }]"
         />
-
-        <!-- <van-field name="rate" label="评分">
-          <template #input>
-            <van-rate v-model="rate" />
-          </template>
-        </van-field> -->
         <van-field
           readonly
           clickable
@@ -53,82 +47,65 @@
           placeholder="请填写活动内容"
           :rules="[{ required: true, message: '请填写活动内容' }]"
         />
-        <!-- <van-field
-          readonly
-          clickable
-          name="datetimePicker"
-          :value="value1"
-          label="活动内容"
-          placeholder="填写活动内容"
-          @click="showPicker1 = true"
-        />
-        <van-popup v-model="showPicker1" position="bottom">
-          <van-datetime-picker
-            type="time"
-            @confirm="onConfirm1"
-            @cancel="showPicker1 = false"
-          />
-        </van-popup> -->
         <van-field
           readonly
           clickable
           name="calendar"
           :value="value2"
-          label="活动日期"
+          label="活动截止日期"
           placeholder="点击选择日期"
           @click="showCalendar = true"
         />
         <van-calendar v-model="showCalendar" @confirm="onConfirm2" />
         <van-field name="uploader" label="活动图片上传">
           <template #input>
-            <van-uploader v-model="uploader" :after-read="afterRead" accept="image/*" />
+            <van-uploader v-model="fileList" :after-read="afterRead" />
           </template>
         </van-field>
+        <van-loading type="spinner" color="#1989fa" class="loading" v-show="isLoading" />
         <div style="margin: 16px">
           <van-button round block type="info" native-type="submit">发布</van-button>
         </div>
       </van-form>
-      <textarea name="" id="" cols="30" rows="10">
-        {{ this.activityContent }}
-      </textarea>
     </div>
-  </transition>
+  </Move>
 </template>
 
 <script>
 import LeftBack from "../../../components/LeftBack/LeftBack";
 import NavBar from "../../../components/NavBar/NavBar";
+import Move from '../../../components/Move/Move'
 import { reqPublishActivity } from "../../../api/home";
-import { loadImage } from "../../../api/ajax";
 import { Toast } from "vant";
+import axios from "axios";
 
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
+
 export default {
   components: {
     NavBar,
     LeftBack,
+    Move
   },
-  computed:{
-    ...mapState(['token'])
+  computed: {
+    ...mapState(["token"]),
   },
   data() {
     return {
-      activity: "",
-      peopleCount: "",
-      uploader: [{ url: "https://img01.yzcdn.cn/vant/leaf.jpg" }],
+      activity: "", //活动主题
+      peopleCount: "", //活动人数
+      uploader: [],
       fileList: [],
-      imgUrl: "",
-      uploadFile: "",
+      imgUrl: [],
       // rate: 3,
-      value: "",
+      value: "", //活动地点
       columns: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
       showPicker: false,
-      content: "",
+      content: "", //活动内容
       showPicker1: false,
-      value2: "",
+      value2: "", //活动日期
       showCalendar: false,
-      activityContent: {},
-      upImg:''
+      isLoading: false,
     };
   },
 
@@ -136,39 +113,47 @@ export default {
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
       console.log(file);
-
-      this.upImg = file.content
-      console.log(this.upImg)
-      const formData = new FormData();
-      formData.append("file", file.file);
-      // const { res } =  this.$http.post('/addActivity', formData)
-      // console.log(formData, "formData");
-      // console.log({res})
-
-      reqPublishActivity(this.activity,this.content,this.peopleCount,this.value,this.value2,formData,this.token).then(res=>{
-        console.log(res,'res!!!!!!!!!!!!!!!!!!!!')
-      })
-
+      const forms = new FormData();
+      forms.append("file", file.file); // 获取上传图片信息
+      axios
+        .post("http://songidea.cn.utools.club/addActivity_Pic_Url", forms, {
+          headers: {
+            "content-type": "multipart/form-data",
+            token: this.token,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            this.imgUrl.push(res.data.PIC_URL);
+          }
+        });
     },
-    onSubmit(values) {
-      console.log("submit", values);
-      this.activityContent = values;
-      Toast("发布成功");
-      console.log(this.activityContent);
-      // // this.$router.replace('/home/volunteer')
-
-      // axios.post("/addActivity",values).then(res=>{
-      //   console.log(res)
-      // }).catch(err=>{
-      //   console.log(err)
-      // })
-      // let param = new FormData()
-      // param.append('upload',this.uploader)
-      // reqPublishActivity(this.activity,this.content,this.peopleCount,this.value,this.value2,this.uploader).then(res=>{
-      //   console.log(res)
-      // }).catch(err=>{
-      //   console.log('failed'+err)
-      // })
+    // 将数据提交给后台
+    onSubmit() {
+      this.isLoading = true;
+      setTimeout(() => {
+        // 将图片传给后端
+        reqPublishActivity(
+          this.activity,
+          this.content,
+          this.peopleCount,
+          this.value,
+          this.value2,
+          this.imgUrl,
+          this.token
+        ).then((res) => {
+          if(res.code === 1000){
+            Toast(res.msg)
+            this.isLoading = false
+            console.log(res)
+          }else{
+            Toast(res.msg)
+            this.isLoading = false
+            console.log(res)
+          }
+        });
+      }, 2000);
     },
     onConfirm(value) {
       this.value = value;
@@ -182,11 +167,6 @@ export default {
       this.value2 = `${date.getMonth() + 1}/${date.getDate()}`;
       this.showCalendar = false;
     },
-    /* publishActivity(){
-      reqPublishActivity(this.activity,this.content,this.peopleCount,this.value,this.value2,this.uploader).then(res=>{
-        console.log(res.tostring())
-      })
-    } */
   },
 };
 </script>
@@ -203,13 +183,9 @@ export default {
     width: 100%;
     border: none;
   }
+  .loading {
+    text-align: center;
+  }
 }
-.move-enter-active,
-.move-leave-active {
-  transition: all 0.3s;
-}
-.move-enter,
-.move-leave-to {
-  transform: translate3d(100%, 0, 0);
-}
+
 </style>

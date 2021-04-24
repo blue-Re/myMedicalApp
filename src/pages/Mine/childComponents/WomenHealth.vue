@@ -1,6 +1,6 @@
 <template>
-  <transition name="move">
-    <div class="womenHealth">
+  <Move>
+    <div class="womenHealth" slot="Move">
       <NavBar>
         <LeftBack slot="left"></LeftBack>
         <div slot="title">关爱女性</div>
@@ -9,23 +9,19 @@
         <img src="../img/women.jpg" alt="" />
       </div>
     </div>
-  </transition>
+  </Move>
 </template>
 
 <script>
 import NavBar from "../../../components/NavBar/NavBar";
-import LeftBack from '../../../components/LeftBack/LeftBack'
+import LeftBack from "../../../components/LeftBack/LeftBack";
+import Move from "../../../components/Move/Move";
 import { Toast } from "vant";
 export default {
   components: {
     NavBar,
-    LeftBack
-  },
-  methods: {
-    back() {
-      this.$router.go(-1);
-      Toast("返回成功！");
-    },
+    LeftBack,
+    Move,
   },
 };
 </script>
@@ -45,12 +41,5 @@ export default {
     height: 100%;
   }
 }
-.move-enter-active,
-.move-leave-active {
-  transition: all 0.3s;
-}
-.move-enter,
-.move-leave-to {
-  transform: translate3d(100%, 0, 0);
-}
+
 </style>

@@ -1,5 +1,6 @@
 <template>
-  <div id="healthAlert">
+<Move>
+  <div id="healthAlert" slot="Move"> 
     <NavBar>
       <LeftBack slot="left"></LeftBack>
       <div slot="title">健康提醒</div>
@@ -28,11 +29,13 @@
 
     <img src="../img/healthAlert.jpeg" alt="" class="img">
   </div>
+  </Move>
 </template>
 
 <script>
 import NavBar from "../../../components/NavBar/NavBar";
 import LeftBack from "../../../components/LeftBack/LeftBack";
+import Move from "../../../components/Move/Move";
 export default {
   data() {
     return {
@@ -43,6 +46,7 @@ export default {
   components: {
     NavBar,
     LeftBack,
+    Move
   },
   methods: {
     isActive(item, index) {

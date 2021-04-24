@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <div id="Video">
+    <div class="top">
+      <div class="title">hpv病毒检测</div>
+      <div class="author">讲师：黄教授</div>
+    </div>
     <video-player
       class="video- player vjs-custom-skin"
       ref="videoPlayer"
@@ -45,11 +49,15 @@ export default {
         sources: [
           {
             type: "video/mp4", //类型
-            src: "http://vjs.zencdn.net/v/oceans.mp4", // ur1地址
+            // src: "http://vjs.zencdn.net/v/oceans.mp4", // ur1地址
+            // src: "https://songidea.oss-cn-beijing.aliyuncs.com/medical/Video/Home-Video/1618923489018.mp4", // ur1地址
+            src:
+              "https://songidea.oss-cn-beijing.aliyuncs.com/medical/Video/Home-Video/06A57CAC9579F7B47B6BAA8A0FBB697E.mp4", // ur1地址
           },
         ],
         poster:
-          "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fnimg.ws.126.net%2F%3Furl%3Dhttp%3A%2F%2Fugcv.ws.netease.com%2Fsnapshot%2F20170506%2FxYTkE7782_1.jpg%26thumbnail%3D750x2147483647%26quality%3D75%26type%3Djpg&refer=http%3A%2F%2Fnimg.ws.126.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620712884&t=732883e578daace847b06be1f9268fad", //封面地址
+          // "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fnimg.ws.126.net%2F%3Furl%3Dhttp%3A%2F%2Fugcv.ws.netease.com%2Fsnapshot%2F20170506%2FxYTkE7782_1.jpg%26thumbnail%3D750x2147483647%26quality%3D75%26type%3Djpg&refer=http%3A%2F%2Fnimg.ws.126.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620712884&t=732883e578daace847b06be1f9268fad", //封面地址
+          "https://songidea.oss-cn-beijing.aliyuncs.com/medical/Video/Home-Video/06A57CAC9579F7B47B6BAA8A0FBB697E.png", //封面地址
         notSupportedMessage: "此视频暂无法播放，请稍后再试", //允许覆盖Video. js无法播放媒体源时显示的默认信息
         controlBar: {
           timeDivider: true, //当前时间和持续时间的分隔符
@@ -112,7 +120,7 @@ export default {
     },
     //媒体的readyState为HAVE ENOUGH_ DATA或更高。这意味着可以在不缓冲的情况下播放整个媒体文件。
     onPlayerCanplaythrough(player) {
-      console. log( 'player Canplaythrough!', player)
+      console.log("player Canplaythrough!", player);
     },
     //播放状态改变回调
     playerStateChanged(playerCurrentState) {
@@ -142,4 +150,19 @@ export default {
 visibility :hidden;//隐藏进度条
 }
 */
+#Video {
+  // height: 100vh;
+  width: 100%;
+  .top {
+    .title {
+      text-align: center;
+      font-size: 1.5rem;
+      // color: #bfa;
+      color: black;
+    }
+    .author {
+      text-align: right;
+    }
+  }
+}
 </style>

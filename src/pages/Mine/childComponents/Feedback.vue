@@ -1,6 +1,6 @@
 <template>
-  <transition name="move">
-    <div id="feedback">
+  <Move>
+    <div id="feedback" slot="Move">
       <NavBar>
         <LeftBack slot="left"></LeftBack>
         <div slot="title">反馈中心</div>
@@ -61,12 +61,13 @@
         
       
     </div>
-  </transition>
+  </Move>
 </template>
 
 <script>
 import NavBar from "../../../components/NavBar/NavBar";
 import LeftBack from "../../../components/LeftBack/LeftBack";
+import Move from "../../../components/Move/Move";
 
 import { Toast } from "vant";
 export default {
@@ -79,6 +80,7 @@ export default {
   components: {
     NavBar,
     LeftBack,
+    Move
   },
   methods: {
     back() {
