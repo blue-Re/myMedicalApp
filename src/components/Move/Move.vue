@@ -14,7 +14,7 @@ export default {
 <style lang="less" scoped>
 .move-enter-active,
 .move-leave-active {
-  transition: all 0.7s;
+  transition: all 0.3s;
 }
 .move-enter,
 .move-leave-to {

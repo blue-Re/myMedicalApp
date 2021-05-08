@@ -1,10 +1,8 @@
 <template>
-  <keep-alive>
-    <div id="app">
-      <TabBar v-show="$route.meta.isShowTabBar" />
-        <router-view></router-view>
-    </div>
-  </keep-alive>
+  <div id="app">
+    <TabBar v-show="$route.meta.isShowTabBar" />
+      <router-view></router-view>
+  </div>
 </template>
 
 <script>

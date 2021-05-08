@@ -59,6 +59,7 @@ import { reqLogin } from "../../api/loginAndRegister";
 
 import { mapMutations } from "vuex";
 
+
 export default {
   components: {
     Move,
@@ -84,7 +85,10 @@ export default {
           this.loading = true;
           if (res.code === "200") {
             user = this.loginForm.username;
+            // 保存用户名
+            localStorage.setItem('userInfo',user)
             this.$store.dispatch("recordUser", user);
+
             // 保存token
             localStorage.setItem("token", res.token);
             this.$store.dispatch("setToken", res.token);

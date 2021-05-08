@@ -18,12 +18,31 @@
             label="验证码"
             class="infoSize emailCaptcha"
           />
+          <van-count-down
+            :time="time"
+            :autoStart="isClick"
+            v-show="isShow"
+            ref="count_down"
+            class="count_down"
+            format="ss"
+            @finish="finish"
+          />
           <van-button
+            ref="captcha"
             type="primary"
             size="mini"
             class="sendemailCaptcha"
+            v-if="!isShow"
             @click="register()"
             >获取验证码</van-button
+          >
+          <van-button
+            ref="captcha"
+            type="primary"
+            size="mini"
+            class="sendemailCaptcha"
+            v-else
+            >已发送</van-button
           >
         </div>
         <van-button
@@ -45,7 +64,7 @@ import Move from "../../components/Move/Move";
 
 import { reqSendEmailCaptcha } from "../../api/loginAndRegister";
 import { reqRegister } from "../../api/loginAndRegister";
-import { Toast } from 'vant';
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -53,29 +72,43 @@ export default {
       email: "",
       username: "",
       password: "",
+      time: 60000,
+      isClick: false,
+      isShow:false
     };
   },
   methods: {
     register() {
-      Toast('正在获取验证码请稍等...')
-      reqSendEmailCaptcha(this.username, this.password, this.email).then((res) => {
+      if (this.username === "" || this.password === "" || this.email === "") {
+        Toast("请填写相关信息后进行注册！");
+      } else {
+        Toast("正在获取验证码请稍等...");
+        this.$refs.count_down.start();
+        this.isShow = true
+        reqSendEmailCaptcha(this.username, this.password, this.email).then((res) => {
+          console.log(res);
+          if (res.msg === "发送成功") {
+            Toast("验证码已发送到您的邮箱");
+          }
+        });
+      }
+    },
+    goToLogin() {
+      reqRegister(this.username, this.password, this.email, this.number).then((res) => {
         console.log(res);
-        if(res.msg === '发送成功'){
-          Toast('验证码已发送到您的邮箱')
+        if (res.msg === "注册成功") {
+          this.$router.replace("/login");
+          Toast("注册成功，请登录！");
+        } else if (res.msg !== "注册成功") {
+          Toast(res.msg);
         }
       });
     },
-    goToLogin(){
-      reqRegister(this.username, this.password, this.email,this.number).then(res=>{
-        console.log(res)
-        if(res.msg === '注册成功'){
-          this.$router.replace("/login")
-          Toast('注册成功，请登录！')
-        }else if(res.msg !== '注册成功'){
-          Toast(res.msg)
-        }
-      })
-    }
+    finish() {
+      this.isClick = false;
+      this.isShow = false
+      this.$refs.count_down.reset();
+    },
   },
   components: {
     Move,
@@ -104,6 +137,14 @@ export default {
       width: 94%;
       margin: 0 auto;
       position: relative;
+      .count_down {
+        position: absolute;
+        right: 15%;
+        bottom: 8%;
+        z-index: 5;
+        font-weight: bold;
+        color: black;
+      }
       .username {
         border-radius: 2% 2% 0 0;
         // border-bottom: 1px solid grey;

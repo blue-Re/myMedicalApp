@@ -9,10 +9,13 @@ const PublishActivity = () => import('../pages/Home/childComponents/PublishActiv
 const ActivityDeatil = () => import('../pages/Home/childComponents/ActivityDeatil.vue')
 const Vaccine = () => import('../pages/Home/childComponents/Vaccine.vue')
 const Illness = () => import('../pages/Home/childComponents/Illness.vue')
+const Essay = () => import('../pages/Home/childComponents/Essay.vue')
 
 const Vedio = () => import('../pages/Vedio/Vedio.vue')
 const Cherry = () => import('../pages/Vedio/childComponents/Cherry.vue')
 const Milk = () => import('../pages/Vedio/childComponents/Milk.vue')
+const Emergency = () => import('../pages/Vedio/childComponents/Emergency.vue')
+const OftenIllness = () => import('../pages/Vedio/childComponents/OftenIllness.vue')
 
 const Weapon = () => import('../pages/Weapon/Weapon.vue')
 
@@ -23,6 +26,10 @@ const WomenHealth = () => import('../pages/Mine/childComponents/WomenHealth.vue'
 const MySetting = () => import('../pages/Mine/childComponents/MySetting.vue')
 const HealthAlert = () => import('../pages/Mine/childComponents/HealthAlert.vue')
 const QuestionNaire = () => import('../pages/Mine/childComponents/QuestionNaire.vue')
+const MyActivity = () => import('../pages/Mine/childComponents/MyActivity.vue')
+const BuyMedicine = () => import('../pages/Mine/childComponents/BuyMedicine.vue')
+const About = ()=>import('../pages/Mine/childComponents/About.vue')
+const Contact = ()=>import('../pages/Mine/childComponents/Contact.vue')
 
 const Login = () => import('../pages/Login/Login.vue')
 const Register = () => import('../pages/Register/Register.vue')
@@ -64,7 +71,7 @@ const router = new VueRouter({
           meta: { requiresAuth: true }
         },
         {
-          path: 'activityDeatil',
+          path: 'activityDeatil/:i_id',
           component: ActivityDeatil,
           meta: { requiresAuth: true }
         },
@@ -76,6 +83,11 @@ const router = new VueRouter({
         {
           path: 'illness',
           component: Illness,
+          meta: { requiresAuth: true }
+        },
+        {
+          path:'essay/:id',
+          component:Essay,
           meta: { requiresAuth: true }
         }
       ]
@@ -94,6 +106,16 @@ const router = new VueRouter({
         {
           path: 'milk',
           component: Milk,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'emergency/:id',
+          component: Emergency,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'oftenillness/:id',
+          component: OftenIllness,
           meta: { requiresAuth: true }
         }
       ]
@@ -140,6 +162,26 @@ const router = new VueRouter({
           path: 'questionnaire',
           component: QuestionNaire,
           meta: { requiresAuth: true }
+        },
+        {
+          path:'myactivity',
+          component:MyActivity,
+          meta: { requiresAuth: true }
+        },
+        {
+          path:'buymedicine',
+          component:BuyMedicine,
+          meta:{requiresAuth: true}
+        },
+        {
+          path:'about',
+          component:About,
+          meta:{requiresAuth: true}
+        },
+        {
+          path:'contact',
+          component:Contact,
+          meta:{requiresAuth: true}
         }
       ]
     },

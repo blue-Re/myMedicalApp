@@ -6,7 +6,7 @@ module.exports = {
     proxy: {
       '/api': {
         // target: 'http://localhost:2020/',
-        target: 'http://songidea.free.idcfengye.com',
+        target: 'https://47.93.229.38:7664',
         changeOrigin: true, //允许跨域
         pathRewrite: {
           '^/api': ''

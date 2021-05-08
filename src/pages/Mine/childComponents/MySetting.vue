@@ -78,11 +78,13 @@ import NavBar from "../../../components/NavBar/NavBar";
 import LeftBack from "../../../components/LeftBack/LeftBack";
 import Move from "../../../components/Move/Move";
 
+import {mapState} from 'vuex'
+
 import { Toast } from "vant";
 export default {
   data() {
     return {
-      name: "吃瓜",
+      name: 'libai',
       phone: "19935453194",
       sex: "男",
       address: "山西太谷",
@@ -93,6 +95,10 @@ export default {
     NavBar,
     LeftBack,
     Move,
+  },
+  
+  computed:{
+    ...mapState(['userInfo'])
   },
   methods: {
     confirm() {
@@ -112,6 +118,7 @@ export default {
       // this.$refs.address.value = this.address;
       // this.$refs.school.value = this.school;
     },
+    
   },
 };
 </script>

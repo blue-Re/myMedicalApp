@@ -1,3 +1,6 @@
+// 引入data.json
+import myData from'./data.json'
+
 // 引入mock.js
 const Mock = require('mockjs')
 // 获取mock.Random 对象
@@ -19,5 +22,12 @@ const data = function () {
   return dataList
 }
 
-// 请求该url，就可以返回dataList
+// 请求该url，就可以返回dataList --->这是自动生成的数据
 Mock.mock('http://localhost:8080/mock/mock_data',data)
+
+// 请求我们自己创建的数据
+// 常见疾病接口
+Mock.mock("http://localhost:8080/mock/mock_mydata/oftenIllness",myData.ofenIllness)
+// 急救指南接口
+Mock.mock(`http://localhost:8080/mock/mock_mydata/emergency`,myData.Emergency)
+

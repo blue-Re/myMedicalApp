@@ -40,14 +40,6 @@
           />
         </van-popup>
         <van-field
-          v-model="content"
-          name="content"
-          class="content"
-          label="活动内容"
-          placeholder="请填写活动内容"
-          :rules="[{ required: true, message: '请填写活动内容' }]"
-        />
-        <van-field
           readonly
           clickable
           name="calendar"
@@ -56,15 +48,23 @@
           placeholder="点击选择日期"
           @click="showCalendar = true"
         />
+        <textarea
+          name="content"
+          v-model="content"
+          class="content"
+          placeholder="请填写活动内容"
+          rows="10"
+        ></textarea>
         <van-calendar v-model="showCalendar" @confirm="onConfirm2" />
         <van-field name="uploader" label="活动图片上传">
           <template #input>
-            <van-uploader v-model="fileList" :after-read="afterRead" />
+            <van-uploader v-model="fileList" :after-read="afterRead" ref="uploader" />
           </template>
         </van-field>
+
         <van-loading type="spinner" color="#1989fa" class="loading" v-show="isLoading" />
         <div style="margin: 16px">
-          <van-button round block type="info" native-type="submit">发布</van-button>
+          <van-button round block ref="submit" type="info" native-type="submit">发布</van-button>
         </div>
       </van-form>
     </div>
@@ -74,10 +74,9 @@
 <script>
 import LeftBack from "../../../components/LeftBack/LeftBack";
 import NavBar from "../../../components/NavBar/NavBar";
-import Move from '../../../components/Move/Move'
-import { reqPublishActivity } from "../../../api/home";
+import Move from "../../../components/Move/Move";
+import { reqPublishActivity, uploadImg } from "../../../api/home";
 import { Toast } from "vant";
-import axios from "axios";
 
 import { mapState } from "vuex";
 
@@ -85,7 +84,7 @@ export default {
   components: {
     NavBar,
     LeftBack,
-    Move
+    Move,
   },
   computed: {
     ...mapState(["token"]),
@@ -95,65 +94,85 @@ export default {
       activity: "", //活动主题
       peopleCount: "", //活动人数
       uploader: [],
-      fileList: [],
       imgUrl: [],
       // rate: 3,
       value: "", //活动地点
-      columns: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
+      columns: ["晋中", "忻州", "长治", "太原", "临汾","朔州",'运城','大同','吕梁','晋城'],
       showPicker: false,
       content: "", //活动内容
       showPicker1: false,
       value2: "", //活动日期
       showCalendar: false,
       isLoading: false,
+      fileList: [],
     };
   },
 
   methods: {
     afterRead(file) {
+      this.isLoading = true;
+      Toast("正在上传请稍等！！！");
       // 此时可以自行将文件上传至服务器
       console.log(file);
       const forms = new FormData();
       forms.append("file", file.file); // 获取上传图片信息
-      axios
-        .post("http://songidea.cn.utools.club/addActivity_Pic_Url", forms, {
-          headers: {
-            "content-type": "multipart/form-data",
-            token: this.token,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          if (res.status === 200) {
-            this.imgUrl.push(res.data.PIC_URL);
-          }
-        });
+      // axios
+      //   .post("http://songidea.cn.utools.club/addActivity_Pic_Url", forms, {
+      //     headers: {
+      //       "content-type": "multipart/form-data",
+      //       token: this.token,
+      //     },
+      //   })
+      //   .then((res) => {
+      //     console.log(res);
+      //     if (res.status === 200) {
+      //       Toast('图片上传成功')
+      //       this.imgUrl.push(res.data.PIC_URL);
+      //     }else{
+      //       Toast("图片上传失败，请重新上传")
+      //     }
+      //   });
+      uploadImg(this.token, forms).then((res) => {
+        console.log(res);
+        if (res.PIC_URL) {
+          this.isLoading = false;
+          Toast("图片上传成功");
+          this.imgUrl.push(res.PIC_URL);
+        } else {
+          Toast("图片上传失败，请重新上传");
+        }
+      });
     },
     // 将数据提交给后台
-    onSubmit() {
-      this.isLoading = true;
-      setTimeout(() => {
-        // 将图片传给后端
-        reqPublishActivity(
-          this.activity,
-          this.content,
-          this.peopleCount,
-          this.value,
-          this.value2,
-          this.imgUrl,
-          this.token
-        ).then((res) => {
-          if(res.code === 1000){
-            Toast(res.msg)
-            this.isLoading = false
-            console.log(res)
-          }else{
-            Toast(res.msg)
-            this.isLoading = false
-            console.log(res)
-          }
-        });
-      }, 2000);
+    onSubmit(values) {
+      this.$refs.submit.disabled = true
+      if (this.value === "" || this.value2 === "" || this.content === '' || this.fileList.length === 0) {
+        Toast("请完善相关信息后进行发布");
+      } else {
+        console.log(values);
+        this.isLoading = true;
+        setTimeout(() => {
+          // 将图片传给后端
+          reqPublishActivity(
+            this.activity,
+            this.content,
+            this.peopleCount,
+            this.value,
+            this.value2,
+            this.imgUrl,
+            this.token
+          ).then((res) => {
+            if (res.code === 1000) {
+              Toast(res.msg);
+              this.$router.replace("/home/volunteer");
+            } else {
+              Toast(res.msg);
+              this.isLoading = false;
+              console.log(res);
+            }
+          });
+        }, 2000);
+      }
     },
     onConfirm(value) {
       this.value = value;
@@ -176,6 +195,14 @@ export default {
   height: 100vh;
   // background-color: yellowgreen;
   z-index: 4;
+  .form {
+    .content {
+      margin-left: 1%;
+      width: 96%;
+      text-align: left;
+      border: 1px solid green;
+    }
+  }
   .activity {
     padding-top: 60px;
   }
@@ -187,5 +214,4 @@ export default {
     text-align: center;
   }
 }
-
 </style>

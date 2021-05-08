@@ -1,63 +1,70 @@
 <template>
-  <div id="Weapon">
-    <NavBar>
-      <div slot="title">健康小知识</div>
-    </NavBar>
-    <div class="block"></div>
-    <Video class="video"></Video>
-    <Video2 class="video"></Video2>
-    <Video3 class="video"></Video3>
-
-  </div>
+  <Move>
+    <div id="Weapon" slot="Move">
+      <NavBar>
+        <div slot="title">健康小知识</div>
+      </NavBar>
+      <div class="block"></div>
+      <van-loading size="24px" v-show="resource.length===0">加载中...</van-loading>
+      <TestVideo
+        v-if="resource.length !== 0"
+        :videoData="resource"
+        v-for="(item, index) in resource"
+        :key="index"
+        :index="index"
+      ></TestVideo>
+    </div>
+  </Move>
 </template>
 
 <script>
 import NavBar from "../../components/NavBar/NavBar";
-import Video from './childComponents/Video'
-import Video2 from './childComponents/Video2'
-import Video3 from './childComponents/Video3'
+import LeftBack from "../../components/LeftBack/LeftBack";
+import Move from "../../components/Move/Move";
 
-import LeftBack from '../../components/LeftBack/LeftBack'
+import TestVideo from "./childComponents/TestVideo";
+
+import { getAllVideo } from "../../api/video";
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
-      mp4:[
-        {
-          src:'',
-          poster:''
-        },
-        {
-          src:'',
-          poster:''
-        },
-        {
-          src:'',
-          poster:''
-        }
-      ]
+      resource: [],
     };
   },
   components: {
     NavBar,
-    Video,
     LeftBack,
-    Video2,
-    Video3
+    TestVideo,
+    Move,
+  },
+  computed: {
+    ...mapState(["token"]),
+  },
+  created() {
+    this._getAllVideo();
+  },
+  methods: {
+    // 获取所有视频
+    _getAllVideo() {
+      getAllVideo(this.token).then((res) => {
+        this.resource = res.resource;
+      });
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.block{
-  padding-top: 46px;
-}
-#Weapon{
-  // height: calc(100vh + 46px + 50px);
-  height: 100vh;
+#Weapon {
+  height: calc(100vh + 130px);
+  // height: 100vh;
   overflow: scroll;
   // height: 100%;
-  .video{
-    margin: 10% 0;
+  background-color: #ececec;
+  .block {
+    height: 46px;
   }
 }
 </style>

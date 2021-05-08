@@ -21,13 +21,22 @@
       <div class="info">
         <div class="info-item">
           <div class="avator">
-            <img src="https://songidea.oss-cn-beijing.aliyuncs.com/medical/head_sculpture_default.png" alt="" />
+            <img
+              v-if="token"
+              src="https://songidea.oss-cn-beijing.aliyuncs.com/medical/head_sculpture_default.png"
+              alt=""
+            />
+            <img
+              v-else
+              src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201912%2F25%2F20191225224833_zloky.thumb.400_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622130654&t=e69b7eff75e8b3257f6cad304f112f31"
+              alt=""
+            />
             <div class="rightEle">
-              <span class="name">{{ userInfo }}</span>
-              
-              <div class="bottomContent">
+              <span class="name" v-if="token">{{ userInfo }}</span>
+              <router-link to="/login" class="name" v-else>登录||注册</router-link>
+              <div class="bottomContent" v-if="token">
                 <i class="iconfont icon-pencil"></i>
-                <span>个性签名：我是真的帅！</span>
+                <span>：成功很难，坚持一定很酷！</span>
               </div>
             </div>
           </div>
@@ -52,7 +61,7 @@
           </div>
         </div>
         <div class="threeItem">
-          <div>
+          <div @click="goTo('/mine/buymedicine')">
             <span class="content">
               <i class="iconfont icon-yaopin"></i>
               <span>购买医药</span>
@@ -66,7 +75,7 @@
           <span>健康服务</span>
         </div>
         <ul class="serviceLists">
-          <li class="lists">
+          <li class="lists" @click="goTo('/mine/myactivity')">
             <div>
               <span class="leftIcon"
                 ><i class="iconfont left-icon icon-huodong"></i
@@ -100,7 +109,7 @@
         </div>
         <ul class="otherService">
           <div class="serviceLists">
-            <li class="lists">
+            <li class="lists" @click="goTo('/mine/contact')">
               <div class="content">
                 <span class="leftIcon"
                   ><i class="iconfont left-icon icon-lianxi1"></i
@@ -118,7 +127,7 @@
                 <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
               </div>
             </li>
-            <li class="lists">
+            <li class="lists" @click="goTo('/mine/about')">
               <div class="content">
                 <span class="leftIcon"
                   ><i class="iconfont left-icon icon-guanyu"></i
@@ -129,7 +138,13 @@
             </li>
           </div>
         </ul>
-        <van-button type="danger" round size="large" class="logout" v-show="userInfo"
+        <van-button
+          type="danger"
+          round
+          size="large"
+          class="logout"
+          v-if="token"
+          @click="signOut"
           >退出登录</van-button
         >
       </div>
@@ -140,18 +155,17 @@
 
 <script>
 import NavBar from "../../components/NavBar/NavBar";
-import { Toast } from "vant";
-
 import { mapState } from "vuex";
-
+import { Dialog } from "vant";
 export default {
   data() {
     return {
       scroll: null,
     };
   },
+
   computed: {
-    ...mapState(["userInfo"]),
+    ...mapState(["userInfo", "token"]),
 
     getToken() {
       return this.$store.state.token;
@@ -163,12 +177,18 @@ export default {
   methods: {
     // 退出登录
     signOut() {
-      // 清除token
-      this.$store.dispatch("clearToken");
-      localStorage.removeItem("token");
-
-      // 刷新页面
-      location.reload();
+      Dialog.confirm({
+        message: "是否退出登录？",
+      })
+        .then(() => {
+          // 清除token
+          this.$store.dispatch("clearToken");
+          localStorage.removeItem("token");
+          console.log(this.token);
+        })
+        .catch(() => {
+          
+        });
     },
 
     goTo(gotoPath) {
@@ -233,7 +253,8 @@ export default {
           margin: auto;
           // top: -20%;
           .name {
-            color: black;
+            font-size: 2rem;
+            color: aliceblue;
           }
           .bottomContent {
             // margin-top: 4px;
@@ -291,7 +312,7 @@ export default {
         height: 100%;
         position: relative;
         // border-radius: 15%;
-        background-color: rgb(255, 255, 255);
+        background-color: gainsboro;
         .content {
           position: relative;
           top: 8px;
@@ -304,12 +325,12 @@ export default {
   }
   .healthWrapper {
     // width: 410px;
-    margin-left: 1%;
+    margin-left: 2%;
     margin-top: 5px;
-    width: 98%;
+    width: 96%;
     height: 210px;
     background-color: white;
-    border-radius: 5%;
+    border-radius: 15px;
     .healthService {
       height: 40px;
       // background-color: yellow;
@@ -375,8 +396,8 @@ export default {
   }
   .toolsWrapper {
     height: 225px;
-    margin-left: 1%;
-    width: 98%;
+    margin-left: 2%;
+    width: 96%;
     background-color: white;
     margin-top: 5px;
     border-radius: 5%;

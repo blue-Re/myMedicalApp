@@ -1,5 +1,5 @@
 <template>
-  <keep-alive>
+  <keep-alive exclude="Volunteer,Vedio">
     <div id="Home">
       <NavBar>
         <span slot="left">
@@ -16,7 +16,7 @@
         </span>
       </NavBar>
       <Swiper></Swiper>
-      <div class="banner">
+      <div class="banner" v-show="diseaseInfo!==''">
         <div class="fourItemWrapper">
           <div class="fourItem" @click="goTo('/home/vaccine')">
             <i class="iconfont icon-yimiao"></i>
@@ -43,65 +43,109 @@
         </div>
       </div>
 
-      <div class="epidemicWrapper">
+      <div class="bgImage" v-show="diseaseInfo!==''">
+        <!-- <a href="https://ada.baidu.com/site/tyadsjk.com/xyl?imid=4d17a9b1127365e2f8a7842a747f6958&bdpc8&bd_vid=nHDdn1TYPjRvrjbYPWmdP161PjwxnWcdg17xnH0s&renqun_youhua=473868#back1619784045671">
+        <img src="./img/list2.jpg" @click="seek"/>
+        </a> -->
+        <img src="./img/list2.jpg" @click="seek"/>
+      </div>
+      <van-loading size="24px" v-show="diseaseInfo===''">加载中...</van-loading>
+      <div class="epidemicWrapper" v-show="diseaseInfo!==''">
         <div class="topNav">
           <div class="leftWords">
             <span class="epidemicWords">新冠肺炎疫情动态</span>
-            <div class="shanxi">
-              <i class="iconfont icon-weizhi"></i>
-              <span>山西疫情</span>
-              <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
-            </div>
-            <div class="bottomWords">截至2021-04-22 09:02:23</div>
+            <div class="bottomWords" v-if="diseaseInfo!==''">截至{{diseaseInfo.country.time}}</div>
           </div>
         </div>
         <div class="otherEpidemic">
-          <div class="seaSide">
+          <!-- <div class="seaSide">
             <div>海外疫情</div>
           </div>
           <div class="homeLand">
             <div>国内疫情</div>
-          </div>
+          </div> -->
+          <van-tabs type="card" line-width="350px" v-if="diseaseInfo!==''">
+            <van-tab title="全国疫情">
+              <div class="countWrapper">
+                <div class="countContent">
+                  <span class="count">{{diseaseInfo.country.totalCured}}</span>
+                  <div class="words">累计治愈</div>
+                </div>
+                <div class="countContent">
+                  <span class="count">{{diseaseInfo.country.totalDeath}}</span>
+                  <div class="words">累计死亡</div>
+                </div>
+                <div class="countContent">
+                  <span class="count">{{diseaseInfo.country.totalConfirmed}}</span>
+                  <div class="words">累计确诊</div>
+                </div>
+                <div class="countContent">
+                  <span class="count">{{diseaseInfo.country.totalDoubtful}}</span>
+                  <div class="words">疑似病例</div>
+                </div>
+              </div>
+              <ul class="regions">
+                <li class="regionsLists">
+                  <span class="words">香港</span>
+                  <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
+                </li>
+                <li class="regionsLists">
+                  <span class="words">新疆</span>
+                  <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
+                </li>
+                <li class="regionsLists">
+                  <span class="words">辽宁</span>
+                  <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
+                </li>
+                <li class="regionsLists">
+                  <span class="words">云南</span>
+                  <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
+                </li>
+              </ul>
+            </van-tab>
+            <van-tab title="山西疫情(含境外输入)">
+              <div class="countWrapper">
+                <div class="countContent">
+                  <span class="count">{{shanxiInfo.totalCured}}</span>
+                  <div class="words">累计治愈</div>
+                </div>
+                <div class="countContent">
+                  <span class="count">{{shanxiInfo.totalDeath}}</span>
+                  <div class="words">累计死亡</div>
+                </div>
+                <div class="countContent">
+                  <span class="count">{{shanxiInfo.totalConfirmed}}</span>
+                  <div class="words">累计确诊</div>
+                </div>
+                <div class="countContent">
+                  <span class="count">{{shanxiInfo.totalIncrease}}</span>
+                  <div class="words">累计新增</div>
+                </div>
+              </div>
+              <ul class="regions">
+                <li class="regionsLists">
+                  <span class="words">香港</span>
+                  <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
+                </li>
+                <li class="regionsLists">
+                  <span class="words">新疆</span>
+                  <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
+                </li>
+                <li class="regionsLists">
+                  <span class="words">辽宁</span>
+                  <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
+                </li>
+                <li class="regionsLists">
+                  <span class="words">云南</span>
+                  <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
+                </li>
+              </ul>
+            </van-tab>
+          </van-tabs>
         </div>
-        <div class="countWrapper">
-          <div class="countContent">
-            <span class="count">198053+</span>
-            <div class="words">新增确诊</div>
-          </div>
-          <div class="countContent">
-            <span class="count">125436</span>
-            <div class="words">新增死亡</div>
-          </div>
-          <div class="countContent">
-            <span class="count">125436</span>
-            <div class="words">累计确诊</div>
-          </div>
-          <div class="countContent">
-            <span class="count">125436</span>
-            <div class="words">累计死亡</div>
-          </div>
-        </div>
-        <ul class="regions">
-          <li class="regionsLists">
-            <span class="words">香港</span>
-            <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
-          </li>
-          <li class="regionsLists">
-            <span class="words">新疆</span>
-            <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
-          </li>
-          <li class="regionsLists">
-            <span class="words">辽宁</span>
-            <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
-          </li>
-          <li class="regionsLists">
-            <span class="words">云南</span>
-            <i class="iconfont icon-arrowRight-copy-copy-copy"></i>
-          </li>
-        </ul>
       </div>
 
-      <div class="medicalEncyclopedia">
+      <div class="medicalEncyclopedia" v-show="diseaseInfo!==''">
         <div class="nav">
           <span class="medical">医学百科</span>
           <span class="more"
@@ -109,41 +153,19 @@
           ></span>
         </div>
         <div class="illness">
-          <ul class="illnessLists">
-            <li class="list">
+          <ul class="illnessLists" >
+            <li class="list" v-for="(item,index) in allEssay" :key="index" @click="goTo(`/home/essay/${index}`)">
               <div class="img">
-                <img src="./img/heart.png" style="width: 70px; height: 70px" alt="" />
+                <img :src="item.title_pic" style="width: 70px; height: 70px" alt="" />
               </div>
               <div class="rightDescription">
-                <div class="title">心脏病</div>
-                <p class="description">
-                  心脏病是一类比较常见的循环系统疾病。循环系统由心脏、血管和调节血液循环的神经体液组织构成，循环系统疾病也称为心血管病，包括上述所有组织器官的疾病，在内科疾病中属于常见病，其中以心脏病最为多见，能显著地影响患者的劳动力。
+                <div class="title">{{item.title}}</div>
+                <p class="description" >
+                  人间百态，啥人都能遇上，怎么办?“面对它、接受它、处理它，放下它。”是最好的办法了。面对、接受、处理、放下，是完成一件事情的全部过程。
                 </p>
               </div>
             </li>
-            <li class="list">
-              <div class="img">
-                <img src="./img/cancer.png" style="width: 70px; height: 70px" alt="" />
-              </div>
-              <div class="rightDescription">
-                <div class="title">癌症</div>
-                <p class="description">
-                  在医学上，癌（cancer）是指起源于上皮组织的恶性肿瘤，是恶性肿瘤中最常见的一类。相对应的，起源于间叶组织的恶性肿瘤统称为肉瘤。有少数恶性肿瘤不按上述原则命名，如肾母细胞瘤、恶性畸胎瘤等。一般人们所说的“癌症”习惯上泛指所有恶性肿瘤。癌症具有细胞分化和增殖异常、生长失去控制、浸润性和转移性等生物学特征，其发生是一个多因子、多步骤的复杂过程，分为致癌、促癌、演进三个过程，与吸烟、感染、职业暴露、环境污染、不合理膳食、遗传因素密切相关。
-                </p>
-              </div>
-            </li>
-            <li class="list">
-              <div class="img">
-                <img src="./img/brain.png" style="width: 70px; height: 70px" alt="" />
-              </div>
-              <div class="rightDescription">
-                <div class="title">脑梗</div>
-                <p class="description">
-                  脑梗死旧称脑梗塞，又称缺血性脑卒中（cerebral ischemic
-                  stroke），是指因脑部血液供应障碍，缺血、缺氧所导致的局限性脑组织的缺血性坏死或软化。脑梗死的临床常见类型有脑血栓形成、腔隙性梗死和脑栓塞等，脑梗死占全部脑卒中的80%。与其关系密切的疾病有：糖尿病、肥胖、高血压、风湿性心脏病、心律失常、各种原因的脱水、各种动脉炎、休克、血压下降过快过大等。临床表现以猝然昏倒、不省人事、半身不遂、言语障碍、智力障碍为主要特征。脑梗死不仅给人类健康和生命造成极大威胁，而且给患者、家庭及社会带来极大的痛苦和沉重的负担。
-                </p>
-              </div>
-            </li>
+            
           </ul>
         </div>
       </div>
@@ -157,27 +179,56 @@ import NavBar from "../../components/NavBar/NavBar";
 import Swiper from "./childComponents/Swiper";
 import { Toast } from "vant";
 
+import {  getDiseaseInfo } from "../../api/home";
+import { mapState } from 'vuex';
 export default {
+  name:'Home',
+  data(){
+    return {
+      diseaseInfo:'',
+      shanxiInfo:[],
+    }
+  },
   components: {
     NavBar,
     Swiper,
   },
+  computed:{
+    ...mapState(['allEssay'])
+  },
   mounted() {
     this.$store.dispatch("getSwiper");
+    // 获取疫情动态
+    this._getDiseaseInfo();
+    // 获取所有的文章
+    this.$store.dispatch('_getAllEssay')
   },
   methods: {
     goTo(gotoPath) {
       this.$router.push({ path: gotoPath });
     },
+    _getDiseaseInfo() {
+      getDiseaseInfo().then((res) => {
+        this.diseaseInfo = res
+        this.shanxiInfo = res.provinceArray[26]
+      });
+    },
+    seek(){
+      window.location.href = "https://ada.baidu.com/site/tyadsjk.com/xyl?imid=4d17a9b1127365e2f8a7842a747f6958&bdpc8&bd_vid=nHDdn1TYPjRvrjbYPWmdP161PjwxnWcdg17xnH0s&renqun_youhua=473868#back1619784045671"
+    },
+    
   },
 };
 </script>
 
 <style lang="less">
 #Home {
-  overflow: scroll;
-  // background-color: grey;
-  height: calc(100vh + 50px);
+  // overflow: scroll;
+  background-color: #ececec;
+  height: calc(100vh + 40px);
+  .loading {
+    padding-top: 46px;
+  }
   .location {
     color: green;
   }
@@ -192,10 +243,14 @@ export default {
   }
   .banner {
     height: 65px;
-    width: 100%;
+    width: 96%;
+    margin-left: 2%;
+    margin-bottom: 2%;
     // background-color: purple;
     display: flex;
-    margin: 3% 0;
+    padding-top: 3%;
+    border-radius: 15px;
+    background-color: azure;
     .fourItemWrapper {
       display: flex;
       height: 100%;
@@ -217,17 +272,30 @@ export default {
       }
     }
   }
+  .bgImage {
+    width: 96%;
+    /* margin: 0 1%; */
+    margin-left: 2%;
+    height: 200px;
+    img {
+      height: 100%;
+      width: 100%;
+      border-radius: 15px;
+    }
+  }
   .epidemicWrapper {
-    width: 100%;
+    border-radius: 15px;
+    background-color: white;
+    width: 96%;
     height: 190px;
-    // background-color: #bfa;
+    margin-left: 2%;
     .topNav {
       height: 40px;
       width: 100%;
       margin: 3% 0;
       // background-color: aqua;
       .leftWords {
-        margin-left: 10px;
+        margin-left: 2%;
         .shanxi {
           font-size: 14px;
           float: right;
@@ -247,9 +315,13 @@ export default {
     .otherEpidemic {
       height: 40px;
       width: 100%;
-      background-color: blueviolet;
+      // background-color: blueviolet;
       display: flex;
       font-weight: bold;
+      .van-tabs__nav--card {
+        width: 360px;
+        margin: 0 0;
+      }
       .seaSide {
         display: flex;
         flex: 1;
@@ -308,9 +380,10 @@ export default {
     border-radius: 5%;
     margin: 3% 0;
     .nav {
-      width: 100%;
+      width: 96%;
       height: 30px;
-      border-radius: 5%;
+      border-radius: 15px;
+      margin-left: 3%;
       // padding-top: 2px;
       background-color: rgb(3, 190, 141);
       // text-align: center;
@@ -319,9 +392,11 @@ export default {
       align-items: center;
       .medical {
         font-weight: bold;
+        margin-left: 3%;
       }
       .more {
         color: rgb(56, 56, 56);
+        margin-right: 2%;
       }
     }
     .illness {
@@ -334,8 +409,10 @@ export default {
         // background-color: yellowgreen;
         .list {
           display: flex;
-          // background-color: pink;
-          margin: 8px 0;
+          background-color: white;
+          width: 96%;
+          margin: 2% 3%;
+          border-radius: 14px;
           .img {
             img {
               border-radius: 15%;

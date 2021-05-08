@@ -8,3 +8,28 @@ export function questionsSurvey(token,values) {
     data:values
   })
 }
+
+/**
+ * 我参加的活动
+ * @param {token}
+ * @returns 
+ */
+export function myJoinActivity(token) {  
+  return ajax({
+    url:'/myJoinActivity',
+    method:'GET',
+    headers:{token}
+  })
+}
+
+/**
+ * 我发布的活动
+* @description
+*/
+export function myPublishActivity(token) {  
+  return ajax({
+    url:'/myPublishActivity',
+    method:'GET',
+    headers:{token}
+  })
+}

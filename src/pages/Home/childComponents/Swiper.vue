@@ -1,13 +1,12 @@
 <template>
-  <keep-alive>
     <div class="Swiper">
+      <van-loading size="24px" color="skyblue" class="loading" v-show="swiperData.length==0">加载中...</van-loading>
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
         <van-swipe-item v-for="(item,index) in swiperData" :key="index">
           <img :src="item.slideshow_url" alt="" />
         </van-swipe-item>
       </van-swipe>
     </div>
-  </keep-alive>
 </template>
 
 <script>

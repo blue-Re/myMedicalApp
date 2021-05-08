@@ -16,19 +16,13 @@
 import NavBar from "../../../components/NavBar/NavBar";
 import LeftBack from "../../../components/LeftBack/LeftBack";
 import Move from "../../../components/Move/Move";
-import { Toast } from "vant";
 export default {
   components: {
     NavBar,
     LeftBack,
     Move,
   },
-  methods: {
-    back() {
-      this.$router.go(-1);
-      Toast("返回成功！");
-    },
-  },
+  
 };
 </script>
 

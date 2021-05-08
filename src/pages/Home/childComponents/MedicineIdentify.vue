@@ -75,7 +75,7 @@
             <span class="leftWords words">物品分类</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{ this.imageData.goodsType }}</span>
+            <span class="rightWords words">{{ this.imageData.goodsType?this.imageData.goodsType:'暂无物品分类' }}</span>
           </div>
         </li>
         <li class="items">
@@ -96,6 +96,10 @@
             }}</span>
           </div>
         </li>
+        <div class="otherInfo">其他信息</div>
+        <textarea  class="itemNote" cols="30" rows="10" placeholder="商品的记录信息">
+          {{this.imageData.note}}
+        </textarea>
       </ul>
     </div>
   </Move>
@@ -106,8 +110,9 @@ import NavBar from "../../../components/NavBar/NavBar";
 import LeftBack from "../../../components/LeftBack/LeftBack";
 import Move from '../../../components/Move/Move'
 import { Toast } from "vant";
-import axios from "axios";
 import { mapState } from "vuex";
+import { scanImg } from '../../../api/home';
+
 export default {
   data() {
     return {
@@ -127,8 +132,12 @@ export default {
   },
   methods: {
     startCheck() {
-      this.isShow = true;
-      Toast("正在检测，请稍候！！！");
+      if(this.fileList.length === 0){
+        Toast('请上传图片后进行检测')
+      }else{
+        this.isShow = true;
+        Toast("正在检测，请稍候！！！");
+      }
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
@@ -137,7 +146,7 @@ export default {
       // this.isShow = true
       const forms = new FormData();
       forms.append("file", file.file); // 获取上传图片信息
-      axios
+      /* axios
         .post("http://songidea.cn.utools.club/scanBar", forms, {
           headers: {
             "content-type": "multipart/form-data",
@@ -151,11 +160,25 @@ export default {
             this.isShow = false;
             this.showList = true;
             Toast(res.data.showapi_res_body.remark);
+            
           } else {
-            Toast(res.data.msg);
             this.isShow = false;
+            Toast(res.data.msg);
           }
-        });
+        }); */
+        scanImg(this.token,forms).then(res=>{
+          console.log(res)
+          if (res.status === 200) {
+            console.log(res);
+            this.imageData = res.showapi_res_body;
+            this.isShow = false;
+            this.showList = true;
+            Toast(res.showapi_res_body.remark);
+          } else {
+            this.isShow = false;
+            Toast(res.msg);
+          }
+        })
     },
   },
 };
@@ -164,9 +187,8 @@ export default {
 <style lang="less" scoped>
 #MedicineIdentify {
   z-index: 3;
-  height: 100vh;
   // width: 100%;
-  // background-color: yellow;
+  background-color: #ececec;
   // overflow:-moz-hidden-unscrollable;
   .van-nav-bar__content {
     background-color: rgb(113, 219, 192);
@@ -243,11 +265,12 @@ export default {
     text-align: center;
   }
   .params {
-    height: 180px;
-    width: 100%;
-    // background-color: purple;
+        width: 96%;
     display: flex;
     flex-direction: column;
+    margin-left: 2%;
+    border-radius: 15px;
+    background-color: white;
     .items {
       // background-color: orange;
       flex: 1;
@@ -271,6 +294,17 @@ export default {
           font-weight: bold;
         }
       }
+    }
+    .itemNote{
+      text-align: center;
+      border: 1px solid saddlebrown;
+      border-radius: 15px;
+    }
+    .otherInfo{
+      height: 30px;
+      text-align: center;
+      color: red;
+      font-weight: bold;
     }
   }
 }

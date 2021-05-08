@@ -772,9 +772,8 @@ export default {
         (this.currentDate.getMonth() + 1) +
         "-" +
         this.currentDate.getDate();
-      console.log(this.date);
       reqChildVaccine(this.date).then((res) => {
-        // console.log(res)
+        console.log(res)
         // console.log(res.宝宝注射育苗日期实体信息)
         this.childVaccine = res.宝宝注射育苗日期实体信息;
         for (let i = 0; i < this.childVaccine.length; i++) {
@@ -783,7 +782,6 @@ export default {
         }
         console.log(this.vaccine);
       });
-      console.log("1111");
     },
     confirm() {
       setTimeout(() => {
@@ -809,6 +807,9 @@ export default {
     padding-top: 50px;
     display: flex;
     text-align: center;
+    .words{
+      text-indent: 2rem;
+    }
 
     .typeVaccine {
       flex: 1;
@@ -823,11 +824,12 @@ export default {
   }
   .words {
     font-size: 1.2rem;
+    text-indent: 2rem;
     text-align: left;
   }
   .calendar {
     margin-top: 4%;
-    background-color: rgba(113, 219, 192);
+    background-color: rgb(113, 219, 192);
   }
   .information {
     height: 30px;

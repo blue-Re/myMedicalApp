@@ -19,6 +19,9 @@ export default {
 };
 </script>
 
-<style>
-
+<style lang="less" scoped>
+  .add{
+    font-size: 20px;
+    color: skyblue;
+  }
 </style>

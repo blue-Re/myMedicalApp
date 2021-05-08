@@ -13,19 +13,54 @@
         </div>
       </Navbar>
       <van-search v-model="value" class="search" placeholder="请输入搜索关键词" />
-      <div class="activity" v-for="(activity, index) in allActivity">
-        <div class="actName" @click="goTo('/home/activityDeatil')">
+      <van-loading size="24px" v-show="allActivity.length==0">加载中...</van-loading>
+      <div class="activity" v-for="(activity, index) in reverseAllActivity" :key="index">
+        <div class="actName" @click="goTo(`/home/activityDeatil/${i_id.reverse()[index]}`)">
           <div class="name">
-            <div class="theme">活动主题：{{ activity.theme }}</div>
-            <!-- <div class="username">活动组织者：{{ activity.username }}</div>
-            <div class="create_time">活动开始时间：{{ activity.create_time }}</div>
-            <div class="address">活动地点：{{ activity.address }}</div>
-            <div class="peoplenum">活动人数：{{ activity.peoplenum }}</div>
-            <div class="ActivityContent">活动内容：{{ activity.content }}</div> -->
-            <div class="id">活动编号：{{ activity.id }}</div>
+            <div class="id">
+              <i class="iconfont icon-ID"></i>&nbsp;活动编号：<span style="color: green">{{
+                activity.id
+              }}</span>
+            </div>
+            <div class="theme">
+              <i class="iconfont icon-qizi1"></i>&nbsp;活动主题：<span
+                style="color:green"
+                >{{ activity.theme }}</span
+              >
+            </div>
+            <div class="create_time">
+              <i class="iconfont icon-shijian1"></i>&nbsp;开始时间：<span
+                style="color: green"
+                >{{ activity.create_time.slice(0, 19) }}</span
+              >
+            </div>
+            <div class="ActivityContent">
+              <i class="iconfont icon-shijian1" style="color:rgb(246,70,89)"></i>&nbsp;结束时间：<span
+                style="color: green"
+                >{{ activity.data }}</span
+              >
+            </div>
+            <div class="address">
+              <i class="iconfont icon-dizhi"></i>&nbsp;活动地点：<span
+                style="color: green"
+                >{{ activity.address }}</span
+              >
+            </div>
+            <div class="username">
+              <i class="iconfont icon-zuzhizhe"></i>&nbsp;组织人员：<span
+                style="color: green"
+                >{{ activity.username }}</span
+              >
+            </div>
+            <div class="peoplenum">
+              <i class="iconfont icon-ren1"></i>&nbsp;活动人数：<span
+                style="color: green"
+                >{{ activity.peoplenum }}</span
+              >
+            </div>
           </div>
         </div>
-        <div class="image" @click="goTo('/home/activityDeatil')">
+        <div class="image" @click="goTo(`/home/activityDeatil/${i_id.reverse()[index]}`)">
           <img
             :src="
               activity.pic_address
@@ -35,26 +70,6 @@
             alt=""
           />
         </div>
-
-        <!-- <div class="otherUseful">
-          <ul class="tools">
-            <li class="list">
-              <div class="littleFont">
-                <i
-                  class="iconfont icon-dianzan"
-                  @click="tags"
-                  :class="{ active: isActive }"
-                ></i
-                ><span>{{ count }}</span>
-                <i class="iconfont icon-fenxiang" @click="showBottom"></i>
-                <div class="bottomCon">
-                  <input type="text" placeholder="请输入对应内容" class="input" v-model="commentContent"/>
-                  <button class="button" @click="_comment">评论</button>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div> -->
       </div>
       <transition name="bottom">
         <div class="footer" v-show="isShowBottom">
@@ -122,35 +137,33 @@
 <script>
 import LeftBack from "../../../components/LeftBack/LeftBack";
 import Navbar from "../../../components/NavBar/NavBar";
-import Move from '../../../components/Move/Move'
+import Move from "../../../components/Move/Move";
 import { Toast } from "vant";
-
-import { comment } from "../../../api/home";
 
 import { mapState } from "vuex";
 
 export default {
+  name: "Volunteer",
   data() {
     return {
       value: "",
       count: 0,
       isActive: false,
       isShowBottom: false,
-      showActivity: {},
-      a_id: 1123123123123123,
-      content: "养老",
-      commentContent: "",
     };
   },
   computed: {
-    ...mapState(["token", "allActivity"]),
+    ...mapState(["token", "allActivity", "i_id"]),
+    reverseAllActivity(){
+      return this.allActivity.reverse()
+    }
   },
   components: {
     Navbar,
     LeftBack,
-    Move
+    Move,
   },
-  created() {
+  mounted() {
     this.$store.dispatch("getAllActivity");
   },
   methods: {
@@ -171,13 +184,6 @@ export default {
     goTo(path) {
       this.$router.push(path);
     },
-    // 调用评论方法
-    _comment() {
-      comment(this.a_id, this.content, this.token).then((res) => {
-        console.log(res);
-      });
-      console.log(this.commentContent);
-    },
   },
 };
 </script>
@@ -188,22 +194,32 @@ export default {
   position: relative;
   height: 100%;
   overflow: scroll;
+  background-color: #eaeaea;
   .search {
     margin-top: 46px;
   }
+
   .activity {
-    height: 90%;
+    // height: 33%;
     width: 98%;
-    background-color: orange;
-    margin: auto;
-    border: 1px solid deeppink;
+    background-color: white;
+    margin-left: 1%;
+    border: 1px solid white;
+    border-radius: 4%;
+    // margin: 4% 0;
+    margin-top: 4%;
+    .actName {
+      margin-left: 1%;
+    }
     .image {
       height: 210px;
       width: 100%;
-      background-color: #bfa;
+      // background-color: #bfa;
       img {
-        width: 100%;
+        width: 98%;
+        margin-left: 1%;
         height: 100%;
+        border-radius: 4%;
       }
     }
     .actName {
@@ -212,7 +228,7 @@ export default {
       .name {
         padding-top: 10px;
         text-align: left;
-        font-size: 20px;
+        // font-size: 20px;
       }
     }
     .otherUseful {
@@ -313,5 +329,4 @@ export default {
     }
   }
 }
-
 </style>

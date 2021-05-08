@@ -10,9 +10,9 @@ export default {
     back() {
       // location.reload()
       this.$router.go(-1);
-      
     },
   },
+  
 };
 </script>
 

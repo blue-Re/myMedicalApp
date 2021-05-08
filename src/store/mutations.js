@@ -16,8 +16,14 @@ export default {
   },
 
   // 操作所有活动数据
-  [types.GET_ALL_ACTIVITY](state,{allActivity}){
+  [types.GET_ALL_ACTIVITY](state,{allActivity,i_id}){
     state.allActivity = allActivity
+    state.i_id = i_id
+  },
+
+  // 操作所有文章
+  [types.ALL_ESSAY](state,{allEssay}){
+    state.allEssay = allEssay
   }
 
 }

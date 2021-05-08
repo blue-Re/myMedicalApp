@@ -11,6 +11,20 @@
         color="white"
         title-inactive-color="black"
       >
+      <van-tab title="急救指南">
+          <ul class="foodHealth">
+            <li class="lists" @click="goTo(`/vedio/emergency/${item.id}`)" v-for="(item,index) in emergencyData">
+              <div class="leftWords">
+                <span>{{item.name}}</span>
+                <div class="author"><span>{{item.content}}</span></div>
+              </div>
+              <div class="rightImg">
+                <img :src="item.img" alt="" />
+              </div>
+            </li>
+            
+          </ul>
+        </van-tab>
         <van-tab title="饮食健康">
           <ul class="foodHealth">
             <li class="lists" @click="goTo('/vedio/cherry')">
@@ -19,7 +33,7 @@
                 <div class="author"><span>作者：兰晓芳</span></div>
               </div>
               <div class="rightImg">
-                <img src="./img/杨梅.png" alt="" />
+                <img src="./img/cherry.jpeg" alt="" />
               </div>
             </li>
             <li class="lists" @click="goTo('/vedio/milk')">
@@ -28,7 +42,7 @@
                 <div class="author"><span>作者：范志红</span></div>
               </div>
               <div class="rightImg">
-                <img src="./img/酸奶预防糖尿病.png" alt="" />
+                <img src="./img/milk.png" alt="" />
               </div>
             </li>
             <li class="lists">
@@ -37,7 +51,7 @@
                 <div class="author"><span>作者：付婷</span></div>
               </div>
               <div class="rightImg">
-                <img src="./img/味精.png" alt="" />
+                <img src="./img/aginomoto.png" alt="" />
               </div>
             </li>
             <li class="lists">
@@ -46,7 +60,7 @@
                 <div class="author"><span>作者：马莎佰</span></div>
               </div>
               <div class="rightImg">
-                <img src="./img/凉粉凉皮.png" alt="" />
+                <img src="./img/beanJelly.png" alt="" />
               </div>
             </li>
           </ul>
@@ -61,7 +75,7 @@
             </div>
             <li class="list">
               <div class="leftImg">
-                <img src="./img/老年慢性病管理.png" alt="" />
+                <img src="./img/oldIllness.png" alt="" />
               </div>
               <div class="rightDes">
                 <div class="words">
@@ -74,7 +88,7 @@
             </li>
             <li class="list">
               <div class="leftImg">
-                <img src="./img/银屑病治疗.png" alt="" />
+                <img src="./img/psoriasis.png" alt="" />
               </div>
               <div class="rightDes">
                 <div class="words">
@@ -87,7 +101,7 @@
             </li>
             <li class="list">
               <div class="leftImg">
-                <img src="./img/单侧声带麻痹治疗.png" alt="" />
+                <img src="./img/vocal.png" alt="" />
               </div>
               <div class="rightDes">
                 <div class="words">
@@ -100,7 +114,7 @@
             </li>
             <li class="list">
               <div class="leftImg">
-                <img src="./img/如何进行银屑病关节病自我筛查.png" alt="" />
+                <img src="./img/oneselfCheck.png" alt="" />
               </div>
               <div class="rightDes">
                 <div class="words">
@@ -113,60 +127,8 @@
             </li>
           </ul>
         </van-tab>
-        <van-tab title="急救指南">
-          <ul class="foodHealth">
-            <li class="lists" @click="goTo()">
-              <div class="leftWords">
-                <span>眼睛进了沙子，首先要进行大量水的冲洗</span>
-                <div class="author"><span>作者：郝芳</span></div>
-              </div>
-              <div class="rightImg">
-                <img src="./img/眼睛进沙子.png" alt="" />
-              </div>
-            </li>
-            <li class="lists" @click="goTo()">
-              <div class="leftWords">
-                <span>鱼刺卡住喉咙，该如何快速急救</span>
-                <div class="author"><span>作者：于小慧</span></div>
-              </div>
-              <div class="rightImg">
-                <img src="./img/鱼刺.png" alt="" />
-              </div>
-            </li>
-            <li class="lists">
-              <div class="leftWords">
-                <span>噎食后自救法</span>
-                <div class="author"><span>作者：戴晓婷</span></div>
-              </div>
-              <div class="rightImg">
-                <img src="./img/吃东西被噎住.png" alt="" />
-              </div>
-            </li>
-            <li class="lists">
-              <div class="leftWords">
-                <span>如果察觉飞虫入耳，千万不可以用掏耳勺去乱挖</span>
-                <div class="author"><span>作者：琪琪</span></div>
-              </div>
-              <div class="rightImg">
-                <img src="./img/虫子入耳.png" alt="" />
-              </div>
-            </li>
-          </ul>
-        </van-tab>
-        <van-tab title="常见疾病">
-          <ul class="foodHealth">
-            <li class="lists" @click="goTo()" v-for="(item,index) in mockData">
-              <div class="leftWords">
-                <span>{{item.title}}</span>
-                <div class="author"><span>作者：{{item.username}}</span></div>
-              </div>
-              <div class="rightImg">
-                <img :src="item.img" alt="" />
-              </div>
-            </li>
-            
-          </ul>
-        </van-tab>
+        
+        
       </van-tabs>
     </div>
     <router-view></router-view>
@@ -174,31 +136,33 @@
 </template>
 
 <script>
-import {reqMockData} from '../../mockjs/reqMock' //引入模拟数据
+import { reqEmergency } from "../../mockjs/reqMock"; //引入模拟数据
 export default {
-  mounted(){
-    reqMockData().then(res=>{
-      console.log(res)
-      this.mockData = res.data
+  name:'Vedio',
+  mounted() {
+    reqEmergency().then(res=>{
+      this.emergencyData = res.data
     })
   },
   data() {
     return {
       active: 2,
-      mockData:[]
+      mockDataOftenIllness: [],
+      emergencyData:[]
     };
   },
   methods: {
-    goTo(path){
-      this.$router.push(path)
-    }
+    goTo(path) {
+      this.$router.push(path);
+    },
   },
 };
 </script>
 <style lang="less" scoped>
 #everyRecommend {
-  // background-color: #bfa;
-  height: 100vh;
+  background-color: #ececec;
+  // height: 100vh;
+  height: calc(100vh + 20px);
   // overflow: hidden;
   overflow: scroll;
   z-index: 1;
@@ -208,15 +172,29 @@ export default {
       display: flex;
       align-items: center;
       border-bottom: 1px solid rgb(229, 229, 229);
+      width: 96%;
+      margin-left: 2%;
+      background-color: white;
+      border-radius: 14px;
+      margin-top: 2%;
       .leftWords {
         width: 100%;
         font-weight: bold;
         font-size: 14px;
         margin: 0 5%;
+        .title{
+          margin-top: 2%px;
+        }
         .author {
-          margin-top: 8px;
+          margin-top: 2%;
           font-size: 10px;
           color: rgb(166, 166, 166);
+          span{
+            display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              overflow: hidden;
+          }
         }
       }
       .rightImg {
@@ -230,7 +208,7 @@ export default {
     }
   }
   .doctorSpeech {
-    // background-color: yellow;
+    background-color: #ececec;
     height: 430px;
     .navbar {
       height: 30px;
@@ -255,6 +233,10 @@ export default {
     }
     .list {
       display: flex;
+      width: 96%;
+      margin: 2% 1%;
+      background-color: white;
+      border-radius: 14px;
       .leftImg {
         margin: 2% 5%;
         img {

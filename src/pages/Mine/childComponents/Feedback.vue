@@ -57,7 +57,7 @@
           </div>
           <div class="advice">
           </div>
-          <van-button type="primary" block>提交</van-button>
+          <van-button type="primary" block @click="submmit">提交</van-button>
         
       
     </div>
@@ -93,6 +93,9 @@ export default {
     show1() {
       this.isShow2 = !this.isShow2;
     },
+    submmit(){
+      Toast('提交成功，感谢您的反馈！')
+    }
   },
 };
 </script>

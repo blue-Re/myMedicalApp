@@ -74,3 +74,76 @@ export function checkAllActivity(token) {
     headers:{token}
   })
 }
+
+/* 
+  查看所有活动的细节
+*/
+export function checkAllActivityDetail(token,a_id) {  
+  return ajax({
+    url:'/activityDetails',
+    method:'GET',
+    headers:{token},
+    params:{a_id}
+  })
+}
+
+/* 
+  参加活动
+*/
+export function joinActivity(token,a_id) {  
+  return ajax({
+    url:'/joinActivity',
+    method:'POST',
+    headers:{token},
+    params:{a_id}
+  })
+}
+
+/**
+*上传志愿活动图片
+* @description
+*/
+export function uploadImg(token,data) {  
+  return ajax({
+    url:'/addActivity_Pic_Url',
+    method:'POST',
+    headers:{token,"content-type": "multipart/form-data"},
+    data:data
+  })
+}
+
+/**
+ * 扫码识物
+* @description
+*/
+export function scanImg(token,data) {  
+  return ajax({
+    url:'/scanBar',
+    method:'POST',
+    headers:{token,"content-type": "multipart/form-data"},
+    data:data
+  })
+}
+
+/**
+ * 疫情详情
+* @description
+*/
+export function getDiseaseInfo() {  
+  return ajax({
+    url:'/diseaseInfoWithTrend',
+    method:'GET',
+  })
+}
+
+/**
+ * 获取所有的文章
+* @description
+*/
+export function getAllEssay(token) {  
+  return ajax({
+    url:'/getAllEssay',
+    method:'GET',
+    headers:{token}
+  })
+}

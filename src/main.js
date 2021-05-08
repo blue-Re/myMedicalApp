@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index'
 import store from './store'
-import axios from 'axios'
+import Mui from 'vue-awesome-mui'
 
 require ('./mockjs/mock.js')
 
@@ -22,7 +22,7 @@ Vue.use(Vant);
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
 Vue.use(Lazyload);
-
+Vue.use(Mui)
 
 new Vue({
   render: h => h(App),
