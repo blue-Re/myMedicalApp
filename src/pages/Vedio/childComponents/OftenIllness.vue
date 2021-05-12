@@ -21,10 +21,10 @@ export default {
     Move,
   },
   mounted() {
-    reqOftenIllness().then((res) => {
-      console.log(res);
-      this.mockDataOftenIllness = res.data;
-    });
+    // reqOftenIllness().then((res) => {
+    //   console.log(res);
+    //   this.mockDataOftenIllness = res.data;
+    // });
   },
   data() {
     return {

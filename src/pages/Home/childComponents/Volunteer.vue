@@ -13,18 +13,22 @@
         </div>
       </Navbar>
       <van-search v-model="value" class="search" placeholder="请输入搜索关键词" />
-      <van-loading size="24px" v-show="allActivity.length==0">加载中...</van-loading>
+      <van-loading size="24px" v-show="allActivity.length == 0">加载中...</van-loading>
       <div class="activity" v-for="(activity, index) in reverseAllActivity" :key="index">
-        <div class="actName" @click="goTo(`/home/activityDeatil/${i_id.reverse()[index]}`)">
+        <div
+          class="actName"
+          @click="goTo(`/home/activityDeatil/${i_id.reverse()[index]}`)"
+        >
           <div class="name">
             <div class="id">
-              <i class="iconfont icon-ID"></i>&nbsp;活动编号：<span style="color: green">{{
-                activity.id
-              }}</span>
+              <i class="iconfont icon-ID"></i>&nbsp;活动编号：<span
+                style="color: green"
+                >{{ activity.id }}</span
+              >
             </div>
             <div class="theme">
               <i class="iconfont icon-qizi1"></i>&nbsp;活动主题：<span
-                style="color:green"
+                style="color: green"
                 >{{ activity.theme }}</span
               >
             </div>
@@ -35,10 +39,8 @@
               >
             </div>
             <div class="ActivityContent">
-              <i class="iconfont icon-shijian1" style="color:rgb(246,70,89)"></i>&nbsp;结束时间：<span
-                style="color: green"
-                >{{ activity.data }}</span
-              >
+              <i class="iconfont icon-shijian1" style="color: rgb(246, 70, 89)"></i
+              >&nbsp;结束时间：<span style="color: green">{{ activity.data }}</span>
             </div>
             <div class="address">
               <i class="iconfont icon-dizhi"></i>&nbsp;活动地点：<span
@@ -130,6 +132,7 @@
           </div>
         </div>
       </transition>
+      <div class="bottomBox"></div>
     </div>
   </Move>
 </template>
@@ -154,16 +157,16 @@ export default {
   },
   computed: {
     ...mapState(["token", "allActivity", "i_id"]),
-    reverseAllActivity(){
-      return this.allActivity.reverse()
-    }
+    reverseAllActivity() {
+      return this.allActivity.reverse();
+    },
   },
   components: {
     Navbar,
     LeftBack,
     Move,
   },
-  mounted() {
+  created() {
     this.$store.dispatch("getAllActivity");
   },
   methods: {
@@ -195,6 +198,14 @@ export default {
   height: 100%;
   overflow: scroll;
   background-color: #eaeaea;
+  .bottomBox{
+    height: 50px;
+  }
+  .title {
+    div {
+      color: white;
+    }
+  }
   .search {
     margin-top: 46px;
   }
@@ -208,6 +219,7 @@ export default {
     border-radius: 4%;
     // margin: 4% 0;
     margin-top: 4%;
+    // padding-bottom: 50px;
     .actName {
       margin-left: 1%;
     }

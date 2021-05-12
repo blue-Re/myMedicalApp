@@ -1,7 +1,7 @@
 <template>
   <div id="Video">
     <div class="video">
-      <video-player
+      <!-- <video-player
       class="video- player vjs-custom-skin player"
       ref="videoPlayer"
       name="videoPlayer"
@@ -9,19 +9,33 @@
       :playsinline="true"
       :options="playerOptions"
     >
-    </video-player>
+    </video-player> -->
+      <video-player
+        class="video- player vjs-custom-skin"
+        ref="videoPlayer"
+        name="videoPlayer"
+        id="video"
+        :playsinline="true"
+        :options="playerOptions"
+        @play="onPlayerPlay($event)"
+        @pause="onPlayerPause($event)"
+        @ended="onPlayerEnded($event)"
+        @waiting="onPlayerWaiting($event)"
+        @timeupdate="onPlayerTimeupdate($event)"
+        @statechanged="playerStateChanged($event)"
+        @canplaythrough="onPlayerCanplaythrough($event)"
+        @ready="playerReadied"
+      >
+      </video-player>
     </div>
-    
+
     <div class="keyInfo">
       <ul class="infoList">
         <li class="list1">
-          <img
-            :src='videoData[index].authorImg'
-            alt=""
-          />
+          <img :src="videoData[index].authorImg" alt="" />
           <div class="little">
             <span class="author">{{ videoData[index].author }}</span>
-            <span class="attention" @click="change" ref="change">· 关注</span><br />
+            <span @click="change" class="attention" ref="change">· 关注</span><br />
             <div class="introduce">行内知名讲师</div>
           </div>
         </li>
@@ -38,9 +52,7 @@
         </li>
       </ul>
     </div>
-    <div class="top">
-      
-    </div>
+    <div class="top"></div>
     <!-- <video-player
       class="video- player vjs-custom-skin"
       ref="videoPlayer"
@@ -66,7 +78,7 @@
 import { videoPlayer } from "vue-video-player";
 import "video.js/dist/video-js.css";
 import "vue-video-player/src/custom-theme.css";
-import { Toast } from 'vant';
+import { Toast } from "vant";
 export default {
   components: {
     videoPlayer,
@@ -134,14 +146,12 @@ export default {
     change() {
       this.$refs.change.innerHTML = "已关注";
       console.log(this.$refs.change.innerHTML);
-      Toast('关注成功！')
+      Toast("关注成功！");
     },
     onSelect(option) {
       Toast(option.name);
       this.showShare = false;
     },
-  },
-  /* methods: {
     // 播放回调
     onPlayerPlay(player) {
       console.log("player play!", player);
@@ -149,6 +159,7 @@ export default {
     // 暂停回调
     onPlayerPause(player) {
       console.log("player pause!", player);
+      this.$refs.videoPlayer.player.pause();
     },
     // 视频播完回调
     onPlayerEnded($event) {
@@ -204,7 +215,7 @@ export default {
       // console. log( ' example player 1 readied', player);
       player.currentTime(this.current);
     },
-  }, */
+  },
 };
 </script>
 

@@ -282,7 +282,7 @@ export default {
         // background-color: pink;
         display: flex;
         align-items: center;
-        height: 60px;
+        height: 85px;
         .words {
           margin: auto;
         }

@@ -3,7 +3,7 @@
     <div class="publishActivity" slot="Move">
       <NavBar>
         <LeftBack slot="left"></LeftBack>
-        <div slot="title">发布活动</div>
+        <div slot="title" class="topTitle">发布活动</div>
       </NavBar>
       <van-form @submit="onSubmit" class="form">
         <van-field
@@ -195,6 +195,9 @@ export default {
   height: 100vh;
   // background-color: yellowgreen;
   z-index: 4;
+  .topTitle{
+    color: white;
+  }
   .form {
     .content {
       margin-left: 1%;

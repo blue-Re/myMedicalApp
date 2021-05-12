@@ -140,7 +140,7 @@ export default {
                 imgUrl:
                   "https://img30.360buyimg.com/babel/s1980x808_jfs/t1/160377/32/16999/301016/60640cedEd2ba4786/2b92c221d66b1c80.jpg!cc_1980x808.webp", // 规格类目图片，只有第一个规格类目可以定义图片
                 previewImgUrl:
-                  "//img30.360buyimg.com/babel/s1980x808_jfs/t1/160377/32/16999/301016/60640cedEd2ba4786/2b92c221d66b1c80.jpg!cc_1980x808.webp", // 用于预览显示的规格类目图片
+                  "https://img30.360buyimg.com/babel/s1980x808_jfs/t1/160377/32/16999/301016/60640cedEd2ba4786/2b92c221d66b1c80.jpg!cc_1980x808.webp", // 用于预览显示的规格类目图片
               },
               {
                 id: "2",

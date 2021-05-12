@@ -1,5 +1,5 @@
 <template>
-  <keep-alive exclude="Volunteer,Vedio">
+  <keep-alive exclude="Volunteer">
     <div id="Home">
       <NavBar>
         <span slot="left">
@@ -64,7 +64,7 @@
           <div class="homeLand">
             <div>国内疫情</div>
           </div> -->
-          <van-tabs type="card" line-width="350px" v-if="diseaseInfo!==''">
+          <van-tabs type="card"  v-if="diseaseInfo!==''">
             <van-tab title="全国疫情">
               <div class="countWrapper">
                 <div class="countContent">
@@ -221,11 +221,19 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" >
+/* html{
+touch-action:none;
+touch-action:pan-y;
+
+} */
 #Home {
+  width: 100%;
   // overflow: scroll;
   background-color: #ececec;
-  height: calc(100vh + 40px);
+  // height: calc(100vh + 40px);
+  overflow: scroll;
+  height: 100vh;
   .loading {
     padding-top: 46px;
   }
@@ -316,11 +324,11 @@ export default {
       height: 40px;
       width: 100%;
       // background-color: blueviolet;
-      display: flex;
+      // display: flex;
       font-weight: bold;
       .van-tabs__nav--card {
-        width: 360px;
-        margin: 0 0;
+        // width: 360px;
+        margin: 0 5px;
       }
       .seaSide {
         display: flex;
@@ -374,6 +382,7 @@ export default {
   }
   .medicalEncyclopedia {
     width: 98%;
+    padding-bottom: 50px;
     // height: 300px;
     // background-color: red;
     margin: 0 auto;
@@ -393,10 +402,12 @@ export default {
       .medical {
         font-weight: bold;
         margin-left: 3%;
+        color: white;
       }
       .more {
         color: rgb(56, 56, 56);
         margin-right: 2%;
+        color: white;
       }
     }
     .illness {

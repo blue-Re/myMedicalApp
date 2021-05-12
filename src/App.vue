@@ -19,5 +19,6 @@ export default {
 #app {
   height: 100vh;
   z-index: 1;
+  // background-color: #ececec;
 }
 </style>

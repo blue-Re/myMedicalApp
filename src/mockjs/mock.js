@@ -27,7 +27,7 @@ Mock.mock('http://localhost:8080/mock/mock_data',data)
 
 // 请求我们自己创建的数据
 // 常见疾病接口
-Mock.mock("http://localhost:8080/mock/mock_mydata/oftenIllness",myData.ofenIllness)
+Mock.mock("http://localhost:8080/mock/mock_mydata/food",myData.foodHealth)
 // 急救指南接口
 Mock.mock(`http://localhost:8080/mock/mock_mydata/emergency`,myData.Emergency)
 

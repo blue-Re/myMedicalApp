@@ -15,7 +15,7 @@ const Vedio = () => import('../pages/Vedio/Vedio.vue')
 const Cherry = () => import('../pages/Vedio/childComponents/Cherry.vue')
 const Milk = () => import('../pages/Vedio/childComponents/Milk.vue')
 const Emergency = () => import('../pages/Vedio/childComponents/Emergency.vue')
-const OftenIllness = () => import('../pages/Vedio/childComponents/OftenIllness.vue')
+const FoodHealth = () => import('../pages/Vedio/childComponents/FoodHealth.vue')
 
 const Weapon = () => import('../pages/Weapon/Weapon.vue')
 
@@ -114,8 +114,8 @@ const router = new VueRouter({
           meta: { requiresAuth: true }
         },
         {
-          path: 'oftenillness/:id',
-          component: OftenIllness,
+          path: 'FoodHealth/:id',
+          component: FoodHealth,
           meta: { requiresAuth: true }
         }
       ]

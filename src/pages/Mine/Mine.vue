@@ -3,13 +3,13 @@
     <div id="Mine">
       <div class="navbar">
         <NavBar>
-          <div slot="title">我的</div>
+          <div slot="title" class="topTitle">我的</div>
           <div slot="right">
             <div class="icon-font">
               <van-icon
                 name="setting-o"
                 size="22"
-                color="rgb(153,153,153)"
+                color="white"
                 class="ico"
                 @click="goTo('/mine/mysetting')"
               />
@@ -214,11 +214,15 @@ export default {
   }
   .navbar {
     background-color: yellow;
+    .topTitle{
+      color: white;
+    }
     .icon-font {
       // margin-left: 5px;
+      color: white;
       .iconfont {
         font-size: 24px;
-        color: rgb(153, 153, 153);
+        color: white;
         margin-left: 20px;
       }
       .ico {
@@ -259,6 +263,7 @@ export default {
           .bottomContent {
             // margin-top: 4px;
             display: block;
+            color: white;
             .vip {
               height: 26px;
               width: 48px;

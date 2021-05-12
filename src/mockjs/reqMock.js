@@ -4,17 +4,8 @@ import {mockAjax} from '../api/ajax'
 export const reqMockData = ()=>axios.get('http://localhost:8080/mock/mock_data')
 
 // 请求常见疾病接口
-export const reqOftenIllness = (id) => axios.get(`http://localhost:8080/mock/mock_mydata/oftenIllness`,{params:id})
+export const reqFoodHealth = (id) => axios.get(`http://localhost:8080/mock/mock_mydata/food`,{params:id})
 
 // 请求急救指南接口
 export const reqEmergency = (id)=>axios.get(`http://localhost:8080/mock/mock_mydata/emergency`,{params:id})
 
-/**
- * 请求急救指南接口
-* @description
-*/
-export function emergencyData(){
-  return mockAjax({
-    url:''
-  })
-}

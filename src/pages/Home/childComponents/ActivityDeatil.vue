@@ -3,7 +3,7 @@
     <div id="activityDeatil" slot="Move">
       <NavBar>
         <LeftBack slot="left" @click.native="back()"></LeftBack>
-        <div slot="title">活动详情</div>
+        <div slot="title" class="topTitle">活动详情</div>
         <div slot="right">
           <i class="iconfont icon-fenxiang" @click="showShare = true"></i>
           <van-share-sheet
@@ -83,7 +83,7 @@
             <button class="button" @click="_comment()">评论</button>
           </div>
 
-          <section class="comment" v-for="(item, index) in reverseComment">
+          <section class="comment" v-for="(item, index) in reverseComment" :key="item.comment">
             <div class="commentInfo">
               <div class="avator">
                 <img :src="item.head_sculpture" alt="" />
@@ -151,6 +151,7 @@ export default {
     LeftBack,
     Move,
   },
+  
   mounted() {
     this.isLoading = true;
     this.getDetailData();
@@ -227,10 +228,16 @@ export default {
   background-color: #eaeaea;
   width: 100%;
   overflow: scroll;
+  .topTitle{
+    color: white;
+  }
   .deatil {
     position: relative;
     // border: 1px solid red;
     // margin: 4% 0;
+    .van-button--block{
+      width: 90%;
+    }
     .loading {
       position: fixed;
       top: 7%;
@@ -243,6 +250,7 @@ export default {
     position: relative;
 
     h4 {
+      color: red;
       text-align: center;
     }
     .timeWrapper {
@@ -250,7 +258,7 @@ export default {
       bottom: -22px;
       right: 0%;
       .time {
-        font-size: 1rem;
+        font-size: 16px;
       }
     }
   }
@@ -258,25 +266,31 @@ export default {
     margin-top: 3%;
     .words {
       // text-align: center;
-      width: 98%;
-      font-size: 1rem;
+      width: 94%;
+      font-size: 16px;
       font-weight: bold;
-      margin-left: 1%;
+      margin-left: 3%;
+      background-color: white;
+      letter-spacing: 3px;
+      border-radius: 15px;
+      text-indent: 2rem;
     }
     img {
       width: 96%;
       height: 95%;
-      margin: 0 2%;
+      margin: 2%;
       border-radius: 4%;
     }
   }
   .volunteerApply {
-    margin: 1% 0;
+    // margin: 1% 0;
+    margin-left: 5%;
   }
   .tools {
     display: flex;
+    margin: 2% 0;
     text-align: center;
-    border-bottom: 1px solid rgba(114, 64, 64, 0.6);
+    // border-bottom: 1px solid rgba(114, 64, 64, 0.6);
     .tools-items {
       flex: 1;
       font-size: 1rem;

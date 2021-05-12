@@ -160,7 +160,7 @@
             <span class="leftWords words">最佳就诊时间</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{ item.DISEASE_0PTIMAL_TIME }}</span>
+            <span class="rightWords words">{{ item.DISEASE_0PTIMAL_TIME?item.DISEASE_0PTIMAL_TIME:'暂无相关信息' }}</span>
           </div>
         </li>
         <li class="items">
@@ -176,7 +176,7 @@
             <span class="leftWords words">传播途径</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{ item.DISEASE_ROUTE }}</span>
+            <span class="rightWords words">{{ item.DISEASE_ROUTE?item.DISEASE_ROUTE:'暂无相关信息' }}</span>
           </div>
         </li>
         <li class="items">
@@ -184,7 +184,7 @@
             <span class="leftWords words">传染病种类别</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{ item.DISEASE_INFECT_TYPE }}</span>
+            <span class="rightWords words">{{ item.DISEASE_INFECT_TYPE?item.DISEASE_INFECT_TYPE:'暂无相关信息' }}</span>
           </div>
         </li>
         <li class="items">
@@ -192,7 +192,7 @@
             <span class="leftWords words">潜伏期</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{ item.DISEASE_LATENTPERI0D }}</span>
+            <span class="rightWords words">{{ item.DISEASE_LATENTPERI0D?item.DISEASE_LATENTPERI0D:'暂无相关信息' }}</span>
           </div>
         </li>
         <li class="items">
@@ -200,7 +200,7 @@
             <span class="leftWords words">潜伏期表现</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{ item.DISEASE_LATENCY_PERF0RMANCE }}</span>
+            <span class="rightWords words">{{ item.DISEASE_LATENCY_PERF0RMANCE?item.DISEASE_LATENCY_PERF0RMANCE:'暂无相关信息' }}</span>
           </div>
         </li>
         <li class="items">
@@ -208,7 +208,7 @@
             <span class="leftWords words">是否会遗传</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{ item.DISEASE_INHERIT }}</span>
+            <span class="rightWords words">{{ item.DISEASE_INHERIT?item.DISEASE_INHERIT:'暂无相关信息' }}</span>
           </div>
         </li>
         <li class="items">
@@ -216,7 +216,7 @@
             <span class="leftWords words">遗传方式</span>
           </div>
           <div class="description">
-            <span class="rightWords words">{{ item.DISEASE_LATENTPERI0D }}</span>
+            <span class="rightWords words">{{ item.DISEASE_LATENTPERI0D?item.DISEASE_LATENTPERI0D:'暂无相关信息' }}</span>
           </div>
         </li>
       </ul>

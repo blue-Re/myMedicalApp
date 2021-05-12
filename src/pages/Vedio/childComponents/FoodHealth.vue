@@ -3,20 +3,21 @@
     <div class="emergency" slot="Move">
       <NavBar>
         <LeftBack slot="left"></LeftBack>
-        <div slot="title" class="Name">急救指南</div>
+        <div slot="title" class="Name">饮食健康</div>
       </NavBar>
-      <header class="topTitle" v-if="emergencyData.length !== 0">
-        <div class="title">{{ emergencyData[id].name }}</div>
-
+      
+      <header class="topTitle" v-if="foodHealthData.length !== 0">
+        <div class="title">{{ foodHealthData[id].name }}</div>
         <div class="cherryBg">
-          <img :src="emergencyData[id].img" alt="" />
+          <img :src="foodHealthData[id].img" alt="" />
         </div>
       </header>
-      <section class="description" v-if="emergencyData.length !== 0">
+      <section class="description" v-if="foodHealthData.length !== 0">
         <div class="words">
-          {{ emergencyData[id].content }}
+          {{ foodHealthData[id].content }}
         </div>
       </section>
+
       <!-- 评论 -->
       <div class="bottomTools">
         <div class="tools" @click="tag()">
@@ -36,6 +37,7 @@
           <span>分享</span>
         </div>
       </div>
+
       <van-share-sheet
         v-model="showShare"
         title="立即分享给好友"
@@ -45,7 +47,7 @@
 
       <div class="recommend">更多推荐</div>
       <!-- 更多推荐 -->
-      <div class="more" v-for="(item,index) in emergencyData">
+      <div class="more" v-for="(item,index) in foodHealthData">
         <div class="leftBox">
           <img :src="item.img" alt="">
         </div>
@@ -65,7 +67,7 @@
 import NavBar from "../../../components/NavBar/NavBar";
 import LeftBack from "../../../components/LeftBack/LeftBack";
 import Move from "../../../components/Move/Move";
-import { reqEmergency } from "../../../mockjs/reqMock"; //引入模拟数据
+import {  reqFoodHealth } from "../../../mockjs/reqMock"; //引入模拟数据
 import { Toast } from 'vant';
 export default {
   components: {
@@ -84,7 +86,7 @@ export default {
   },
   data() {
     return {
-      emergencyData: [],
+      foodHealthData: [],
       // id: "",
       showShare: false,
       options: [
@@ -114,9 +116,8 @@ export default {
       // this.id = this.$route.params.id;
       // console.log(this.id);
       // 拿数据
-      reqEmergency().then((res) => {
-        this.emergencyData = res.data;
-        console.log(this.emergencyData)
+      reqFoodHealth().then((res) => {
+        this.foodHealthData = res.data;
       });
     },
     /* back() {
@@ -137,7 +138,7 @@ export default {
 
 <style lang="less" scoped>
 .emergency {
-  // height: 100vh;
+  height: 100vh;
   background-color: #ececec;
   .Name {
     color: white;

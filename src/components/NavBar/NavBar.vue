@@ -1,9 +1,9 @@
 <template>
   <div>
     <van-nav-bar id="NavBar" class="clearfix">
-      <slot slot="left" name="left"></slot>
-      <slot slot="title" name="title"></slot>
-      <slot slot="right" name="right"></slot>
+      <slot slot="left" name="left" class="left"></slot>
+      <slot slot="title" name="title" class="title"></slot>
+      <slot slot="right" name="right" class="right"></slot>
     </van-nav-bar>
   </div>
 </template>
@@ -28,6 +28,7 @@ export default {
   position: fixed;
   width: 100%;
   background-color: rgb(3,190,141);
+  
 }
 
 .clearfix:before,

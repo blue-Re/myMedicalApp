@@ -2,7 +2,7 @@
   <Move>
     <div id="Weapon" slot="Move">
       <NavBar>
-        <div slot="title">健康小知识</div>
+        <div slot="title" class="topTitle">健康小知识</div>
       </NavBar>
       <div class="block"></div>
       <van-loading size="24px" v-show="resource.length===0">加载中...</van-loading>
@@ -13,6 +13,7 @@
         :key="index"
         :index="index"
       ></TestVideo>
+      <div class="bottomBox"></div>
     </div>
   </Move>
 </template>
@@ -65,6 +66,12 @@ export default {
   background-color: #ececec;
   .block {
     height: 46px;
+  }
+  .topTitle{
+    color: white;
+  }
+  .bottomBox{
+    height: 50px;
   }
 }
 </style>

@@ -18,7 +18,6 @@ import NavBar from "../../../components/NavBar/NavBar";
 export default {
   data() {
     return {
-      id: "",
     };
   },
   components: {
@@ -26,19 +25,16 @@ export default {
     Move,
     NavBar,
   },
-  created() {
-    this.getId();
-  },
+  
   computed: {
     ...mapState(["allEssay"]),
+    id(){
+      return this.$route.params.id
+    }
   },
   methods: {
-    getId() {
-      this.id = this.$route.params.id;
-    },
     back(){
       this.$router.replace('/home')
-      location.reload()
     }
   },
 };
